@@ -10,13 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_24_165658) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_25_153507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "requests", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
+  create_table "requests_tags", id: false, force: :cascade do |t|
+    t.bigint "request_id"
+    t.bigint "tag_id"
+    t.index ["request_id", "tag_id"], name: "index_requests_tags_on_request_id_and_tag_id", unique: true
+    t.index ["request_id"], name: "index_requests_tags_on_request_id"
+    t.index ["tag_id"], name: "index_requests_tags_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -37,4 +53,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_165658) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "requests", "users"
 end
