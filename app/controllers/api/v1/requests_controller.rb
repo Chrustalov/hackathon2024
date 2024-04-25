@@ -4,7 +4,8 @@ class Api::V1::RequestsController < ApplicationController
   # GET /requests
   def index
     @requests = Request.all
-
+    @tags = params[:tags]
+    # викликати фільтер
     render json: @requests
   end
 
