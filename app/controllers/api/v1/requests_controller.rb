@@ -15,10 +15,9 @@ class Api::V1::RequestsController < ApplicationController
 
   # POST /requests
   def create
-    @request = Request.new(request_params)
-
+    @request = current_user.requests.build(request_params)
     if @request.save
-      render json: @request, status: :created, location: @request
+      render json: @request, status: :created, location: api_v1_requests_path
     else
       render json: @request.errors, status: :unprocessable_entity
     end
