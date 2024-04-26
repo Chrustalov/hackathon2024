@@ -2,10 +2,24 @@ class Api::V1::RequestsController < ApplicationController
   before_action :set_request, only: %i[ show update destroy ]
 
   # GET /requests
-  def index 
+  def index
     @tags = Tag.where(id: params[:tags])
     @requests = Requests::Filter.call(Request.all, params)
-    render json: { requests: @requests, tags: @tags}
+
+    request_data_with_tags = []
+
+    @requests.each do |request|
+      request_attributes = request.attributes.symbolize_keys
+
+      tag_names = request.tags.pluck(:name)
+
+      request_attributes[:tags] = tag_names
+      request_attributes[:photo] = request.photo.url
+
+      request_data_with_tags << request_attributes
+    end
+
+    render json: { requests: request_data_with_tags, tags: @tags}
   end
 
   # GET /requests/1
@@ -38,13 +52,12 @@ class Api::V1::RequestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_request
-      @request = Request.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def request_params
-      params.require(:request).permit(:title, :body, :photo, tag_ids: [])
-    end
+  def set_request
+    @request = Request.find(params[:id])
+  end
+
+  def request_params
+    params.require(:request).permit(:title, :body, :photo, tag_ids: [])
+  end
 end
