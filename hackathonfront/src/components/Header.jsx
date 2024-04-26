@@ -134,8 +134,15 @@ function Header() {
 
             <li className="nav-item">
               {/* <a className="nav-link" href={item} > */}
-              <NavLink className="nav-link" to={"login"}>
-                Login
+              <NavLink className="nav-link" to={"signin"}>
+                Sign in
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              {/* <a className="nav-link" href={item} > */}
+              <NavLink className="nav-link" to={"signup"}>
+                Sign up
               </NavLink>
             </li>
 

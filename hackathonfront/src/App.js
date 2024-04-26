@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
+import Login from "./pages/Login";
 
 const API_URL = "http://localhost:3000/api/v1/requests";
 
@@ -33,9 +34,9 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/request"} element={<div>Request</div>} />
-        <Route path={"profile"} element={<div>Profile</div>} />
-        <Route path={"login"} element={<div>Login</div>} />
-        <Route path={"signin"} element={<div>Signin</div>} />
+        <Route path={"/profile"} element={<div>Profile</div>} />
+        <Route path={"/signin"} element={<Login />} />
+        <Route path={"/signup"} element={<Login/>} />
       </Routes>
 
       <Footer />
