@@ -1,17 +1,18 @@
-import './App.css';
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
-import Requests from './components/requests';
-import { useEffect, useState } from 'react';
-import Header from './components/Header';
-import Home from './pages/Home';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Requests from "./components/requests";
+import { useEffect, useState } from "react";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Footer from "./components/Footer";
 
+const API_URL = "http://localhost:3000/api/v1/requests";
 
-const API_URL = "http://localhost:3000/api/v1/requests"
-
-function getAPIData( ) {
-  return axios.get(API_URL).then((resp)=> resp.data)
+function getAPIData() {
+  return axios.get(API_URL).then((resp) => resp.data);
 }
 function App() {
   const [requests, setRequests] = useState([]);
@@ -27,11 +28,18 @@ function App() {
   // },[]);
 
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <h1>Hello</h1>
-      <Home />
-    </>
+      <Routes>
+        <Route path={"/"} element={"<Home />"} />
+        <Route path={"/request"} element={<div>Request</div>} />
+        <Route path={"profile"} element={<div>Profile</div>} />
+        <Route path={"login"} element={<div>Login</div>} />
+        <Route path={"signin"} element={<div>Signin</div>} />
+      </Routes>
+
+      <Footer />
+    </BrowserRouter>
   );
 }
 

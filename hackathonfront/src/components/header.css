@@ -38,7 +38,7 @@ i {
 }
 #navbarSupportedContent ul li a{
 	font-weight: 600;
-	color: rgba(0,0,0,0.8);
+	color: rgba(0,0,0,1);
     text-decoration: none;
     font-size: 15px;
     display: block;
@@ -175,3 +175,5 @@ i {
 		left: -25px;
 	}
 }
+
+
