@@ -2,11 +2,10 @@ class Api::V1::RequestsController < ApplicationController
   before_action :set_request, only: %i[ show update destroy ]
 
   # GET /requests
-  def index
-    @requests = Request.all
-    @tags = params[:tags]
-    # викликати фільтер
-    render json: @requests
+  def index 
+    @tags = Tag.where(id: params[:tags])
+    @requests = Requests::Filter.call(Request.all, params)
+    render json: { requests: @requests, tags: @tags}
   end
 
   # GET /requests/1
