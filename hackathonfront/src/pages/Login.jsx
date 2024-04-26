@@ -1,14 +1,41 @@
 import React, { useCallback, useState } from "react";
-import { Facebook, Google, Twitter } from "../components/icons";
+import { Eye, Facebook, Google, Twitter } from "../components/icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useToastNotification } from "../hooks/useToastNotification";
 
 function Login() {
   const [isNewUser, setIsNewUser] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [succsess, error] = useToastNotification();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = useCallback(() => {
+    setShowPassword((prev) => !prev);
+  }, []);
+
+  const onChangename = useCallback((e) => {
+    setName(e.target.value);
+  }, []);
+  const onChangeEmail = useCallback((e) => {
+    setEmail(e.target.value);
+  }, []);
+  const onChangePassword = useCallback((e) => {
+    setPassword(e.target.value);
+  }, []);
 
   const changeForm = useCallback(() => {
-    console.log("clicked");
     setIsNewUser((prev) => !prev);
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    succsess("Submitted");
+    return false;
+  };
 
   return (
     <main className="d-flex align-content-center justify-content-center my-3">
@@ -35,7 +62,10 @@ function Login() {
                 }
           }
         >
-          <form className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-2">
+          <form
+            className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-2"
+            onSubmit={handleSubmit}
+          >
             <h1 className="fw-bold fs-5 m-0">Create Account</h1>
             <div className="mx-2">
               {[
@@ -51,38 +81,56 @@ function Login() {
                 </Link>
               ))}
             </div>
-            <span>Or use your email for registration</span>
-            <label for="name" id="name-label">
+            <span>Or use your email for registration:</span>
+            <label htmlFor="name1" id="name-label">
               <input
                 className="rounded w-50 p-2 login-input "
                 type="text"
-                id="name"
+                id="name1"
                 placeholder="Name"
                 name="name"
+                value={name}
+                onChange={onChangename}
                 required
               />
             </label>
-            <label for="email" id="email-label">
+            <label htmlFor="email1" id="email-label">
               <input
                 className="rounded w-50 p-2 login-input "
                 type="email"
-                id="email"
+                id="email1"
                 placeholder="Email"
                 aria-label="Email"
                 name="email"
+                value={email}
+                onChange={onChangeEmail}
                 required
               />
             </label>
 
-            <label for="password" id="password-label">
+            <label
+              className="position-relative"
+              htmlFor="password1"
+              id="password-label"
+            >
               <input
                 className="rounded w-50 p-2 login-input "
-                type="password"
-                id="password"
+                type={!showPassword ? "password" : "text"}
+                id="password1"
                 placeholder="Password"
                 name="password"
+                title="Password must contain at least 8 characters, including digits, uppercase, and lowercase letters"
+                value={password}
+                onChange={onChangePassword}
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
                 required
               />
+              <button
+                className="position-absolute btn rounded-circle border-0  "
+                onClick={togglePassword}
+              >
+                <Eye fill={"#000"} isOpen={showPassword} />
+              </button>
             </label>
             <div>
               <button
@@ -93,9 +141,7 @@ function Login() {
               >
                 Sign Up
               </button>
-              <div
-                className="text-center text-dark d-sm-none d-block mt-3"
-              >
+              <div className="text-center text-dark d-sm-none d-block mt-3">
                 If you are registered, you can{" "}
                 <Link
                   className="text-dark text-decoration-none footer-links"
@@ -117,7 +163,10 @@ function Login() {
             opacity: isNewUser ? 0 : 1,
           }}
         >
-          <form className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-3">
+          <form
+            className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-3"
+            onSubmit={handleSubmit}
+          >
             <h1 className="fw-bold fs-5 m-0">Sign in</h1>
             <div className="mx-2">
               {[
@@ -133,8 +182,8 @@ function Login() {
                 </Link>
               ))}
             </div>
-            <span>Or use your account</span>
-            <label for="email" id="email-label">
+            <span>Or use your account:</span>
+            <label htmlFor="email" id="email-label">
               <input
                 className="rounded w-50 p-2 login-input "
                 type="email"
@@ -142,19 +191,35 @@ function Login() {
                 placeholder="Email"
                 aria-label="Email"
                 name="email"
+                value={email}
+                onChange={onChangeEmail}
                 required
               />
             </label>
 
-            <label for="password" id="password-label">
+            <label
+              className="position-relative"
+              htmlFor="password"
+              id="password-label"
+            >
               <input
-                className="rounded w-50 p-2 login-input "
-                type="password"
+                className=" rounded w-50 p-2 login-input"
+                type={!showPassword ? "password" : "text"}
                 id="password"
                 placeholder="Password"
                 name="password"
+                value={password}
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+                title="Password must contain at least 8 characters, including digits, uppercase, and lowercase letters"
+                onChange={onChangePassword}
                 required
               />
+              <button
+                className="position-absolute btn rounded-circle border-0  "
+                onClick={togglePassword}
+              >
+                <Eye fill={"#000"} isOpen={showPassword} />
+              </button>
             </label>
 
             <Link className="text-black me-4 footer-links">
@@ -169,9 +234,7 @@ function Login() {
               >
                 Sign In
               </button>
-              <div
-                className="text-center text-dark d-sm-none d-block mt-3"
-              >
+              <div className="text-center text-dark d-sm-none d-block mt-3">
                 If you aren't registered, you can{" "}
                 <Link
                   className="text-dark text-decoration-none footer-links"
@@ -256,6 +319,57 @@ function Login() {
       </div>
     </main>
   );
+
+
+  function signUp({ name, password, email }) {
+    axios
+      .post(
+        process.env.HOST_API + "/signup",
+        JSON.stringify({
+          user: {
+            name,
+            password,
+            email,
+          },
+        })
+      )
+      .then(async (res) => {
+        if (res.status !== 200) throw await res.json();
+        return res.json();
+      })
+      .then((data) => {
+        succsess(data.message || data.status.message);
+      })
+      .catch((err) => {
+        error(err.message || err.status.message);
+      });
+  }
+
+  function signIn({ password, email }) {
+    axios
+      .post(
+        process.env.HOST_API + "/login",
+        JSON.stringify({
+          user: {
+            password,
+            email,
+          },
+        })
+      )
+      .then(async (res) => {
+        if (res.status !== 200) throw await res.json();
+        return res.json();
+      })
+      .then((data) => {
+        succsess(data.message);
+      })
+      .catch((err) => {
+        error(err.message);
+      });
+  }
+
 }
+
+
 
 export default Login;

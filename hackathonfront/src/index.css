@@ -1,5 +1,6 @@
 :root {
   --blucolor: #5161ce;
+  --toastify-color-success: #5161ce !important ;
 }
 
 body {
@@ -172,4 +173,9 @@ code {
     }
     transition: all 0.6s ease-in-out !important;
   }
+}
+
+.my-toast-success {
+  color: var(--blucolor) !important;
+  
 }
