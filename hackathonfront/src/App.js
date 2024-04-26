@@ -1,6 +1,8 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Requests from "./components/requests";
@@ -43,6 +45,7 @@ function App() {
       </Routes>
 
       <Footer />
+      <ToastContainer/>
     </BrowserRouter>
   );
 }
