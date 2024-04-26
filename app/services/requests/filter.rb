@@ -16,7 +16,7 @@ class Requests::Filter < BaseService
       return @scope if params[:tags].nil?
         scope_filtered = @scope
         scope_filtered.joins(:tags)
-                   .where(tags: { title: params[:tags] })
+                   .where(tags: { id: params[:tags] })
                    .distinct
     end
   end
