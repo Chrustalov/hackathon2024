@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do 
       resources :requests
       resources :tags
+      resources :profiles
       root to: "requests#index"
     end
   end
