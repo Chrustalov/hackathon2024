@@ -10,7 +10,11 @@ class Api::V1::ProfilesController < ApplicationController
       end
 
     def show 
-        render json: { user: @user, profile: @user.profile}
+        if current_user 
+            render json: { user: current_user, profile: current_user.profile}
+        else 
+            render json: { user: @user, profile: @user.profile}
+        end
     end
 
     def update 

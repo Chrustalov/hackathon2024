@@ -4,16 +4,20 @@ import axios from 'axios'; // або інша бібліотека для зап
 const Profile = () => {
   const [user, setUser] = useState(null);
 
-  const API_URL = "http://localhost:3000/api/v1/";
+  const API_URL = "http://localhost:3000/api/v1/profiles/1";
 
     function getAPIData() {
-    return axios.get(API_URL).then((resp) => resp.data);
+
+    return axios.get(API_URL, { headers: {
+        "content-type": "application/json",
+        "authorization": localStorage.getItem("token")
+    }}).then((resp) => resp.data);
     }
   useEffect(() => {
     const fetchUser = async () => {
       try {
-       
         const response = await getAPIData(); 
+        console.log(response)
         setUser(response.data); 
       } catch (error) {
         console.error('Помилка при отриманні даних про користувача:', error);

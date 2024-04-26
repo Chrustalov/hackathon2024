@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import { Eye, Facebook, Google, Twitter } from "../components/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -6,7 +6,34 @@ import { useToastNotification } from "../hooks/useToastNotification";
 
 function Login() {
   const [isNewUser, setIsNewUser] = useState(true);
-  const [name, setName] = useState("");
+  const formRef = useRef(null);
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Зупиняємо стандартну поведінку форми
+
+    const formData = new FormData(formRef.current);
+    console.log(formData)
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const url="http://localhost:3000/login"
+    console.log(email,password)
+    try{
+      const response=await fetch(url, {
+          method: 'post',
+          headers: {
+              "content-type": 'application/json',
+              "accept": "application/json"
+          },
+          body: JSON.stringify({user: { email: email, password: password }})
+      }) 
+      const data = await response.json()
+      if(!response.ok) throw data.error
+      console.log(response.headers.get("Authorization"))
+     
+      localStorage.setItem('token', response.headers.get("Authorization"))
+  } catch (error){
+      console.log("error", error)
+  }
+  };  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [succsess, error] = useToastNotification();
@@ -30,12 +57,12 @@ function Login() {
     setIsNewUser((prev) => !prev);
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    succsess("Submitted");
-    return false;
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   succsess("Submitted");
+  //   return false;
+  // };
 
   return (
     <main className="d-flex align-content-center justify-content-center my-3">
@@ -163,10 +190,7 @@ function Login() {
             opacity: isNewUser ? 0 : 1,
           }}
         >
-          <form
-            className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-3"
-            onSubmit={handleSubmit}
-          >
+          <form className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-3"  ref={formRef} onSubmit={handleSubmit} >
             <h1 className="fw-bold fs-5 m-0">Sign in</h1>
             <div className="mx-2">
               {[
