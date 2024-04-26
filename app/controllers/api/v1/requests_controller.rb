@@ -46,6 +46,6 @@ class Api::V1::RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:title, :body, tag_ids: [])
+      params.require(:request).permit(:title, :body, :photo, tag_ids: [])
     end
 end

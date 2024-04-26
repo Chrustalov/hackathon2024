@@ -15,8 +15,6 @@ const updateActiveItem = (target, horiSelector) => {
   horiSelector.style.width = activeWidthNewAnimWidth + "px";
 };
 
-
-
 function Header() {
   const tabsNewAnimRef = useRef(null);
   const horiSelectorRef = useRef(null);

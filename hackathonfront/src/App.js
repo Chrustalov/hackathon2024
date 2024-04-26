@@ -31,7 +31,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path={"/"} element={"<Home />"} />
+        <Route path={"/"} element={<Home />} />
         <Route path={"/request"} element={<div>Request</div>} />
         <Route path={"profile"} element={<div>Profile</div>} />
         <Route path={"login"} element={<div>Login</div>} />
