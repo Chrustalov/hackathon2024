@@ -24,7 +24,12 @@ class Api::V1::RequestsController < ApplicationController
 
   # GET /requests/1
   def show
-    render json: @request
+    tags = @request.tags
+    user = @request.user
+    user_profile = @request.user.profile
+    latest_posts = Request.order(created_at: :desc).limit(3)
+
+    render json: { request: @request, tags:, user:, user_profile:, latest_posts: }
   end
 
   # POST /requests

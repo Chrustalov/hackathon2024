@@ -127,7 +127,7 @@ function Header() {
 
             <li className="nav-item">
               {/* <a className="nav-link" href={item} > */}
-              <NavLink className="nav-link" to={"request"}>
+              <NavLink className="nav-link" to={"requests"}>
                 Request
               </NavLink>
             </li>

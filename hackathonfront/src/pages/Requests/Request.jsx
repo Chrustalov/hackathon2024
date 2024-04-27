@@ -7,7 +7,6 @@ import RequestSkeleton from "./RequestSkeleton";
 const url = process.env.REACT_APP_API + "/api/v1/requests";
 
 function Request() {
-    
     const [requests, setRequests] = useState([]);
     const [isFetching, setIsFetching] = React.useState(false);
 

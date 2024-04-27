@@ -2,9 +2,22 @@
   text-align: center;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+#root {
+  min-height: 100%;
+  /* Flexbox styles */
+  display: flex;
+  flex-direction: column;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -35,4 +48,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+footer {
+  margin-top: auto;
 }

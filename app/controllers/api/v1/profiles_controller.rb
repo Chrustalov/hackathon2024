@@ -24,10 +24,13 @@ class Api::V1::ProfilesController < ApplicationController
             render json: @request.errors, status: :unprocessable_entity
           end
     end 
-    def destroy 
+
+    def destroy
         @user.destroy!
     end
+
     private
+
     def set_user
         @user = User.find(params[:id])
     end

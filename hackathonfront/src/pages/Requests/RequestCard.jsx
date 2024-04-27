@@ -1,4 +1,5 @@
 import React from "react";
+import {Link, NavLink} from "react-router-dom";
 
 const RequestCard = (props) => {
     function calculateTimeDifference(date) {
@@ -37,14 +38,14 @@ const RequestCard = (props) => {
     }
 
     return (
-        <div className="card mb-3">
-            <img src={'http://localhost:3000' + props.photo} className="img-fluid rounded-start" alt="..." />
-            <div className="card-body p-4 h-100">
+        <div className="card">
+            <img src={'http://localhost:3000' + props.photo}  className="card-img-top" alt="Fissure in Sandstone"/>
+            <div className="card-body">
                 <h5 className="card-title">{props.title}</h5>
                 <p className="card-text">{props.body}</p>
                 <p className="card-text">
                     <small className="text-muted">
-                    Останнє оновлення {formatTimeDifference(props.updated_at)}
+                        Останнє оновлення {formatTimeDifference(props.updated_at)}
                     </small>
                 </p>
                 <p className="card-text">
@@ -54,7 +55,17 @@ const RequestCard = (props) => {
                         ))
                     }
                 </p>
-                <button className="btn btn-primary mt-auto">Перейти</button>
+            </div>
+            <div className="card-footer">
+                <Link
+                    className="btn btn-primary mt-auto"
+                    to={{
+                        pathname: `/view-request-details/${props.id}`,
+                        state: { request_id: props.id }
+                    }}
+                >
+                    Перейти
+                </Link>
             </div>
         </div>
     );
