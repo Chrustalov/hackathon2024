@@ -5,13 +5,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Requests from "./components/requests";
 import { useEffect, useMemo, useState } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Request from "./pages/Requests/Request";
 import Footer from "./components/Footer";
+import RequestDetails from "./pages/Requests/RequestDetails";
 import Login from "./pages/Login";
+import ScrollToTop from "./components/ScrollToTop";
 
 const API_URL = "http://localhost:3000/api/v1/requests";
 
@@ -35,13 +38,18 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path={"/"} element={<Home />} />
-        <Route path={"/request"} element={<Request />} />
         <Route path={"/profile"} element={<Profile />}>
           <Route path={"/profile/:id"} element={<Profile />} />
         </Route>
+        <Route path={"/requests"} element={<Request />} />
+        <Route path={"/profile"} element={<Profile />}>
+          <Route path={"/profile/:id"} element={<Profile />} />
+        </Route>
+        <Route exact path={"/view-request-details/:id"} element={<RequestDetails />} />
         <Route path={"/signin"} element={loginPage} />
         <Route path={"/signup"} element={loginPage} />
       </Routes>

@@ -5,7 +5,7 @@ import { Facebook, Google, Instagram, Twitter } from "./icons";
 
 function Footer() {
   return (
-    <footer className="text-center text-lg-start text-blak header_underline  position-relative ">
+    <footer className="text-center text-lg-start text-blak header_underline position-relative">
       <section className="d-flex justify-content-between p-4 bg-black  ">
         <div className="me-5 fw-bolder fs-5 text-white ">
           <span>Get connected with us on social networks:</span>

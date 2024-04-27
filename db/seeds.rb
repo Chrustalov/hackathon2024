@@ -35,8 +35,8 @@ cities_ukraine = [
   user = User.create(
     email: emails[i],
     role: [0, 1].sample,
-    password: '12345678aA',
-    password_confirmation: '12345678aA'
+    password: '123456Ua',
+    password_confirmation: '123456Ua'
   )
 
   Profile.create(

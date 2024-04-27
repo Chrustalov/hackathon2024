@@ -7,11 +7,13 @@ import SocialLinks from "../components/Profile/SocialLinks";
 import UserInfo from "../components/Profile/UserInfo";
 import ContentLoader from "react-content-loader";
 
+
 const API_URL = process.env.REACT_APP_API + "/api/v1/profiles";
 
 const Profile = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
+
   const [profile, setProfile] = useState(null);
   const navigation = useNavigate();
   const { toastError } = useToastNotification();

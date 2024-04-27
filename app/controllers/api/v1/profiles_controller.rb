@@ -2,19 +2,16 @@ class Api::V1::ProfilesController < ApplicationController
     before_action :set_user, only: %i[ show update destroy ]
     def index 
         if current_user 
+            
             render json: { user: current_user, profile: current_user.profile}
         else 
-            render json: "Not auth", status: :unprocessable_entity
+            render json: "Not Authorized", status: :unprocessable_entity
         end
      
       end
 
     def show 
-        if current_user 
-            render json: { user: current_user, profile: current_user.profile}
-        else 
-            render json: { user: @user, profile: @user.profile}
-        end
+        render json: { user: @user, profile: @user.profile}
     end
 
     def update 
@@ -24,10 +21,13 @@ class Api::V1::ProfilesController < ApplicationController
             render json: @request.errors, status: :unprocessable_entity
           end
     end 
-    def destroy 
+
+    def destroy
         @user.destroy!
     end
+
     private
+
     def set_user
         @user = User.find(params[:id])
     end
