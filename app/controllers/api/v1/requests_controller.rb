@@ -3,9 +3,23 @@ class Api::V1::RequestsController < ApplicationController
 
   # GET /requests
   def index
-    @requests = Request.all
+    @tags = Tag.where(id: params[:tags])
+    @requests = Requests::Filter.call(Request.all, params)
 
-    render json: @requests
+    request_data_with_tags = []
+
+    @requests.each do |request|
+      request_attributes = request.attributes.symbolize_keys
+
+      tag_names = request.tags.pluck(:name)
+
+      request_attributes[:tags] = tag_names
+      request_attributes[:photo] = request.photo.url
+
+      request_data_with_tags << request_attributes
+    end
+
+    render json: { requests: request_data_with_tags, tags: @tags}
   end
 
   # GET /requests/1
@@ -15,10 +29,9 @@ class Api::V1::RequestsController < ApplicationController
 
   # POST /requests
   def create
-    @request = Request.new(request_params)
-
+    @request = current_user.requests.build(request_params)
     if @request.save
-      render json: @request, status: :created, location: @request
+      render json: @request, status: :created, location: api_v1_requests_path
     else
       render json: @request.errors, status: :unprocessable_entity
     end
@@ -39,13 +52,12 @@ class Api::V1::RequestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_request
-      @request = Request.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def request_params
-      params.require(:request).permit(:title, :body)
-    end
+  def set_request
+    @request = Request.find(params[:id])
+  end
+
+  def request_params
+    params.require(:request).permit(:title, :body, :photo, tag_ids: [])
+  end
 end

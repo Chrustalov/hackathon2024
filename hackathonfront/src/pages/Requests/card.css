@@ -1,0 +1,13 @@
+.card {
+    width: 32%;
+}
+
+.card-body {
+    height: 100%;
+}
+
+.cards-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
