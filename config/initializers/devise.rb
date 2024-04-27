@@ -27,7 +27,12 @@ Devise.setup do |config|
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
+    if Rails.env.production?
+      jwt.secret = ENV["DEVISE_JWT_SECRET_KEY"]
+    else
+      jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
+    end
+
     jwt.dispatch_requests = [
       ['POST', %r{^/login$}]
     ]
@@ -36,6 +41,9 @@ Devise.setup do |config|
     ]
     jwt.expiration_time = 1.day.to_i
   end
+
+  config.secret_key = ENV["SECRET_KEY_BASE"] if Rails.env.production?
+
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
