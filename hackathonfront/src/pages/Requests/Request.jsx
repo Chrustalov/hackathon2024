@@ -4,9 +4,10 @@ import axios from "axios";
 import "./card.css";
 import RequestCard from "./RequestCard";
 import RequestSkeleton from "./RequestSkeleton";
+const url = process.env.REACT_APP_API + "/api/v1/requests";
 
 function Request() {
-    const url = 'http://localhost:3000/api/v1/requests';
+    
     const [requests, setRequests] = useState([]);
     const [isFetching, setIsFetching] = React.useState(false);
 

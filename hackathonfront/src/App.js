@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Requests from "./components/requests";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -32,6 +32,7 @@ function App() {
   //   });
   // return ()=> (mounted = false);
   // },[]);
+  const loginPage = useMemo(() => <Login />, []);
 
   return (
     <BrowserRouter>
@@ -39,13 +40,15 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/request"} element={<Request />} />
-        <Route path={"profile"} element={<Profile />} />
-        <Route path={"/signin"} element={<Login />} />
-        <Route path={"/signup"} element={<Login/>} />
+        <Route path={"/profile"} element={<Profile />}>
+          <Route path={"/profile/:id"} element={<Profile />} />
+        </Route>
+        <Route path={"/signin"} element={loginPage} />
+        <Route path={"/signup"} element={loginPage} />
       </Routes>
 
       <Footer />
-      <ToastContainer/>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

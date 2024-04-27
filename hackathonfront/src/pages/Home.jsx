@@ -6,10 +6,23 @@ function Home() {
       className="container-fluid align-content-center"
       style={{ height: "80vh" }}
     >
-      <div className="container  justify-content-center align-content-center my-5 py-5 ">
-        <h1 className="text-center ">
-          <label htmlFor="main-search">
-            Helping each other can make world better
+      <div className="container-fluid  justify-content-center align-content-center my-5 py-5 ">
+        <h1 className="text-center">
+          <label htmlFor="main-search" className="position-relative w-100 ">
+            {"Helping each other can make world better".split('').map(
+              (letter, index, arr) => (
+                <span
+                  className="position-relative d-inline-block uppercase mt-2"
+                  key={index}
+                  style={{
+                    animationDelay: `${index * 0.5}s`,
+                    animation: `waviy ${arr.length * 0.5}s infinite`,
+                  }}
+                >
+                  {letter === " " ? "\u00A0" : letter}
+                </span>
+              )
+            )}
           </label>
         </h1>
       </div>

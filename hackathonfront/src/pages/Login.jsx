@@ -1,42 +1,23 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Eye, Facebook, Google, Twitter } from "../components/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useNavigation, useResolvedPath } from "react-router-dom";
 import axios from "axios";
 import { useToastNotification } from "../hooks/useToastNotification";
 
 function Login() {
-  const [isNewUser, setIsNewUser] = useState(true);
-  const formRef = useRef(null);
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Зупиняємо стандартну поведінку форми
+  const {toastSuccess , toastError} = useToastNotification();
 
-    const formData = new FormData(formRef.current);
-    console.log(formData)
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const url="http://localhost:3000/login"
-    console.log(email,password)
-    try{
-      const response=await fetch(url, {
-          method: 'post',
-          headers: {
-              "content-type": 'application/json',
-              "accept": "application/json"
-          },
-          body: JSON.stringify({user: { email: email, password: password }})
-      }) 
-      const data = await response.json()
-      if(!response.ok) throw data.error
-      console.log(response.headers.get("Authorization"))
-     
-      localStorage.setItem('token', response.headers.get("Authorization"))
-  } catch (error){
-      console.log("error", error)
-  }
-  };  const [name, setName] = useState("");
+  const location = useLocation();
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    setIsNewUser(location.pathname === "/signup");
+  }, [location]);
+
+  const [isNewUser, setIsNewUser] = useState(true);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [succsess, error] = useToastNotification();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePassword = useCallback(() => {
@@ -53,16 +34,20 @@ function Login() {
     setPassword(e.target.value);
   }, []);
 
-  const changeForm = useCallback(() => {
-    setIsNewUser((prev) => !prev);
-  }, []);
+  const changeForm =() => {
+    navigation(location.pathname === "/signup" ? "/signin" : "/signup", { replace: true });
+  };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   succsess("Submitted");
-  //   return false;
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isNewUser) {
+      Login({ email, password, name }, "/signup");
+    } else {
+      Login({ email, password });
+    }
+    return false;
+  };
 
   return (
     <main className="d-flex align-content-center justify-content-center my-3">
@@ -190,7 +175,10 @@ function Login() {
             opacity: isNewUser ? 0 : 1,
           }}
         >
-          <form className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-3"  ref={formRef} onSubmit={handleSubmit} >
+          <form
+            className="d-flex justify-content-center align-content-center flex-column py-3 h-100 text-center gap-3"
+            onSubmit={handleSubmit}
+          >
             <h1 className="fw-bold fs-5 m-0">Sign in</h1>
             <div className="mx-2">
               {[
@@ -344,56 +332,40 @@ function Login() {
     </main>
   );
 
-
-  function signUp({ name, password, email }) {
-    axios
-      .post(
-        process.env.HOST_API + "/signup",
-        JSON.stringify({
-          user: {
-            name,
-            password,
-            email,
+  async function Login({ name, password, email }, endPoint = "/login") {
+    try {
+      const response = await axios
+        .post(
+          process.env.REACT_APP_API + endPoint,
+          {
+            user: {
+              name,
+              password,
+              email,
+            },
           },
-        })
-      )
-      .then(async (res) => {
-        if (res.status !== 200) throw await res.json();
-        return res.json();
-      })
-      .then((data) => {
-        succsess(data.message || data.status.message);
-      })
-      .catch((err) => {
-        error(err.message || err.status.message);
-      });
-  }
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        )
+        .catch((err) => err.response);
 
-  function signIn({ password, email }) {
-    axios
-      .post(
-        process.env.HOST_API + "/login",
-        JSON.stringify({
-          user: {
-            password,
-            email,
-          },
-        })
-      )
-      .then(async (res) => {
-        if (res.status !== 200) throw await res.json();
-        return res.json();
-      })
-      .then((data) => {
-        succsess(data.message);
-      })
-      .catch((err) => {
-        error(err.message);
-      });
-  }
+      console.log("response", response);
 
+      const data = response.data;
+      if (response.status > 300) throw data;
+      console.log(response.headers.get("Authorization"));
+      localStorage.setItem("token", response.headers.get("Authorization"));
+      toastSuccess(data?.status?.message);
+      navigation("/");
+    } catch (err) {
+      console.log("error", err);
+      toastError(err?.status?.message);
+    }
+  }
 }
-
-
 
 export default Login;
