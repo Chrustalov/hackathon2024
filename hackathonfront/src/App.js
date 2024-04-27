@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Requests from "./components/requests";
 import { useEffect, useMemo, useState } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
