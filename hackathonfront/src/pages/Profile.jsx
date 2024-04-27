@@ -7,18 +7,21 @@ import SocialLinks from "../components/Profile/SocialLinks";
 import UserInfo from "../components/Profile/UserInfo";
 import ContentLoader from "react-content-loader";
 import RequestCard from "./Requests/RequestCard";
+import Request from "./Requests/Request";
+import { useCreateRequest } from "../hooks/useCreateRequest";
 
-const API_URL = process.env.REACT_APP_API + "/api/v1/profiles";
+const PROFILE_URL = process.env.REACT_APP_API + "/api/v1/profiles";
+const REQUEST_URL = process.env.REACT_APP_API + "/api/v1/requests";
 
 const Profile = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [requests, setRequests] = useState([]);
 
   const navigation = useNavigate();
-  const { toastError } = useToastNotification();
+  const { toastError, toastSuccess } = useToastNotification();
+  const { modal, open } = useCreateRequest();
 
   const editProfile = useCallback(() => {
     setIsEditing(true);
@@ -31,7 +34,7 @@ const Profile = () => {
   const onEditProfile = useCallback((newProfile) => {
     axios
       .patch(
-        API_URL + "/" + profile.id,
+        PROFILE_URL + "/" + newProfile.id,
         { profile: newProfile },
         {
           headers: {
@@ -44,6 +47,7 @@ const Profile = () => {
       .then((data) => {
         setProfile(data.profile);
         setIsEditing(false);
+        toastSuccess("Profile updated successfully");
       })
       .catch((error) => {
         toastError(error.response?.status?.message);
@@ -53,7 +57,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       axios
-        .get(API_URL + (id ? "/" + id : ""), {
+        .get(PROFILE_URL + (id ? "/" + id : ""), {
           headers: id
             ? { "content-type": "application/json" }
             : {
@@ -138,19 +142,17 @@ const Profile = () => {
       </section>
       <section>
         <div className="container py-5">
-          <div className="row">
-            <div className="col justify-content-center ">
-              <h2 className="text-center">My posts</h2>
-              <button>Create new post</button>
-            </div>
+          <div className="row justify-content-end me-2">
+            <button className="btn btn-outline-dark col-auto" onClick={open}>
+              Create new
+            </button>
           </div>
-          <div className="row mt-2 ">
-            {requests.map((item) => (
-              <RequestCard key={item.title} {...item} />
-            ))}
+          <div className="row">
+            {user ? <Request filter={{ id: user.id }} /> : null}
           </div>
         </div>
       </section>
+      {modal}
     </main>
   );
 };

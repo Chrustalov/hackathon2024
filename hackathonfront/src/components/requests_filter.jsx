@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TomSelect from 'tom-select';
 
-function RequestFilter({ initialTags, onTagClick, All_tags }) {
-  const [tags, setTags] = useState(initialTags || []);
+function RequestFilter({ initialTags = [], onTagClick, All_tags = [] }) {
+  const [tags, setTags] = useState(initialTags);
 
   const selectRef = useRef(null);
 

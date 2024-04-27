@@ -1,7 +1,7 @@
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -48,7 +48,11 @@ function App() {
         <Route path={"/profile"} element={<Profile />}>
           <Route path={"/profile/:id"} element={<Profile />} />
         </Route>
-        <Route exact path={"/view-request-details/:id"} element={<RequestDetails />} />
+        <Route
+          exact
+          path={"/view-request-details/:id"}
+          element={<RequestDetails />}
+        />
         <Route path={"/signin"} element={loginPage} />
         <Route path={"/signup"} element={loginPage} />
       </Routes>
