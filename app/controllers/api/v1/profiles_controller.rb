@@ -4,17 +4,13 @@ class Api::V1::ProfilesController < ApplicationController
         if current_user 
             render json: { user: current_user, profile: current_user.profile}
         else 
-            render json: "Not auth", status: :unprocessable_entity
+            render json: "Not Authorized", status: :unprocessable_entity
         end
      
       end
 
     def show 
-        if current_user 
-            render json: { user: current_user, profile: current_user.profile}
-        else 
-            render json: { user: @user, profile: @user.profile}
-        end
+        render json: { user: @user, profile: @user.profile}
     end
 
     def update 
