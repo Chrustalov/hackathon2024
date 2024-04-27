@@ -1,6 +1,6 @@
 :root {
   --blucolor: #5161ce;
-  --toastify-color-success: #5161ce !important ;
+  --toastify-color-success: var(--blucolor) !important;
 }
 
 body {
@@ -175,18 +175,35 @@ code {
   }
 }
 
-
-
 @keyframes waviy {
-  0%,100% {
-    transform: translateY(0)
+  0%,
+  100% {
+    transform: translateY(0);
   }
-  20%, 60% {
-    transform: translateY(-20px)
+  20%,
+  60% {
+    transform: translateY(-20px);
   }
-  
-  40%,80% {
-    transform: translateY(0)
+
+  40%,
+  80% {
+    transform: translateY(0);
   }
 }
 
+.btn-outline-dark {
+  --bs-btn-color: var(--blucolor) !important;
+  --bs-btn-border-color: var(--blucolor) !important;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--blucolor) !important;
+  --bs-btn-hover-border-color: var(--blucolor) !important;
+  --bs-btn-focus-shadow-rgb: 33, 37, 41;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--blucolor) !important;
+  --bs-btn-active-border-color: var(--blucolor) !important;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: var(--blucolor) !important;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--blucolor) !important;
+  --bs-gradient: none;
+}

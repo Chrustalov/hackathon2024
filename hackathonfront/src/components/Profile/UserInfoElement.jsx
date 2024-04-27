@@ -1,6 +1,6 @@
 import React from 'react'
 
-function UserInfoElement({name, value, isEditing, onChange, required}) {
+function UserInfoElement({name, value, isEditing, onChange, required = true}) {
   return (
     <div className="row">
       <div className="col-sm-3">

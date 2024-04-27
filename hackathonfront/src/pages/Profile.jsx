@@ -6,18 +6,22 @@ import FotoCard from "../components/Profile/FotoCard";
 import SocialLinks from "../components/Profile/SocialLinks";
 import UserInfo from "../components/Profile/UserInfo";
 import ContentLoader from "react-content-loader";
+import RequestCard from "./Requests/RequestCard";
+import Request from "./Requests/Request";
+import { useCreateRequest } from "../hooks/useCreateRequest";
 
-
-const API_URL = process.env.REACT_APP_API + "/api/v1/profiles";
+const PROFILE_URL = process.env.REACT_APP_API + "/api/v1/profiles";
+const REQUEST_URL = process.env.REACT_APP_API + "/api/v1/requests";
 
 const Profile = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
-
   const [profile, setProfile] = useState(null);
-  const navigation = useNavigate();
-  const { toastError } = useToastNotification();
   const [isEditing, setIsEditing] = useState(false);
+
+  const navigation = useNavigate();
+  const { toastError, toastSuccess } = useToastNotification();
+  const { modal, open } = useCreateRequest();
 
   const editProfile = useCallback(() => {
     setIsEditing(true);
@@ -27,19 +31,23 @@ const Profile = () => {
     setIsEditing(false);
   }, []);
 
-
   const onEditProfile = useCallback((newProfile) => {
     axios
-      .put(API_URL, newProfile, {
-        headers: {
-          "content-type": "application/json",
-          authorization: localStorage.getItem("token"),
-        },
-      })
+      .patch(
+        PROFILE_URL + "/" + newProfile.id,
+        { profile: newProfile },
+        {
+          headers: {
+            "content-type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then((resp) => resp.data)
       .then((data) => {
         setProfile(data.profile);
         setIsEditing(false);
+        toastSuccess("Profile updated successfully");
       })
       .catch((error) => {
         toastError(error.response?.status?.message);
@@ -49,7 +57,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       axios
-        .get(API_URL + (id ? "/" + id : ""), {
+        .get(PROFILE_URL + (id ? "/" + id : ""), {
           headers: id
             ? { "content-type": "application/json" }
             : {
@@ -105,7 +113,7 @@ const Profile = () => {
   }
 
   return (
-    <main style={{minHeight: "600px"}}>
+    <main style={{ minHeight: "600px" }}>
       <section>
         <div className="container py-5">
           <div className="row">
@@ -132,6 +140,19 @@ const Profile = () => {
           </div>
         </div>
       </section>
+      <section>
+        <div className="container py-5">
+          <div className="row justify-content-end me-2">
+            <button className="btn btn-outline-dark col-auto" onClick={open}>
+              Create new
+            </button>
+          </div>
+          <div className="row">
+            {user ? <Request filter={{ id: user.id }} /> : null}
+          </div>
+        </div>
+      </section>
+      {modal}
     </main>
   );
 };

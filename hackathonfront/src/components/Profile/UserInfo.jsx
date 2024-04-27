@@ -24,7 +24,16 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
   return (
     <div className="col-lg-8">
       <div className=" mb-4">
-        <div className="card-body">
+        <form
+          className="card-body"
+          id="edit-profile"
+          method="post"
+          onSubmit={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+          }}
+        >
           <UserInfoElement
             name={"First name"}
             value={state.first_name}
@@ -69,7 +78,7 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
               dispatch({ type: "SET_ABOUT_ME", payload: e.target.value });
             }}
           />
-        </div>
+        </form>
         {isEditing && (
           <div className="card-footer mt-5 d-flex justify-content-end gap-3">
             <button
@@ -85,6 +94,8 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
             <button
               className="btn btn-outline-dark flex-grow-1 "
               onClick={() => onEditProfile(state)}
+              type="submit"
+              form="edit-profile"
             >
               Save
             </button>
