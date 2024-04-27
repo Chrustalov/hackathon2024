@@ -12,22 +12,27 @@ class Requests::Filter < BaseService
 
       filter_by_tags
     end
-  
+
     private
 
     def filter_by_tags
       select_users_requests if params[:id]
 
       return @scope if params[:tags].nil? || params[:tags].empty?
-
-      scope_filtered = @scope
-      scope_filtered.joins(:tags)
-                    .where(tags: { name: params[:tags] })
-                    .distinct
+        scope_filtered = @scope
+        scope_filtered.joins(:tags)
+                   .where(tags: { name: params[:tags] })
+                   .distinct
     end
 
     def select_users_requests
-      @scope = @scope.where(user_id: params[:id])
+      user = User.find(params[:id])
+
+      if user.volunteer?
+        @scope = @scope.where(executor_id: user.id)
+      else
+        @scope = @scope.where(user_id: user.id)
+      end
     end
 
     def select_request_by_title
