@@ -8,22 +8,29 @@ class Requests::Filter < BaseService
     end
   
     def call
-      filter_by_tags()
-    end
+      return select_request_by_title if params[:title].present?
 
-    def select_users_requests 
-      @scope = @scope.where(user_id: params[:id])
+      filter_by_tags
     end
   
     private
-    def filter_by_tags()
-      select_users_requests() if params[:id]
+
+    def filter_by_tags
+      select_users_requests if params[:id]
 
       return @scope if params[:tags].nil? || params[:tags].empty?
-        scope_filtered = @scope
-        scope_filtered.joins(:tags)
-                   .where(tags: { name: params[:tags] })
-                   .distinct
+
+      scope_filtered = @scope
+      scope_filtered.joins(:tags)
+                    .where(tags: { name: params[:tags] })
+                    .distinct
+    end
+
+    def select_users_requests
+      @scope = @scope.where(user_id: params[:id])
+    end
+
+    def select_request_by_title
+      @requests = Request.where("title ILIKE ?", "%#{params[:title]}%")
     end
   end
-  

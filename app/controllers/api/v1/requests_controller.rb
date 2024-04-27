@@ -3,7 +3,6 @@ class Api::V1::RequestsController < ApplicationController
 
   # GET /requests
   def index
-
     @tags = Tag.where(id: params[:tags])
     @requests = Requests::Filter.call(Request.all, params)
 
