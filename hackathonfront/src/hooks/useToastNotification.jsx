@@ -11,7 +11,7 @@ export const useToastNotification = () => {
         
     });
   }, []);
-  const toastError = useCallback((text = "Success") => {
+  const toastError = useCallback((text = "Something went wrong") => {
     toast.error(text, {
       autoClose: 2000,
       draggable: true,
@@ -20,5 +20,5 @@ export const useToastNotification = () => {
     });
   }, []);
 
-  return [toastSuccess, toastError];
+  return {toastSuccess, toastError};
 };

@@ -131,20 +131,30 @@ function Header() {
                 Request
               </NavLink>
             </li>
+            {!localStorage.getItem("token") ? (
+              <>
+                <li className="nav-item">
+                  {/* <a className="nav-link" href={item} > */}
+                  <NavLink className="nav-link" to={"signin"}>
+                    Sign in
+                  </NavLink>
+                </li>
 
-            <li className="nav-item">
-              {/* <a className="nav-link" href={item} > */}
-              <NavLink className="nav-link" to={"signin"}>
-                Sign in
-              </NavLink>
-            </li>
-
-            <li className="nav-item">
-              {/* <a className="nav-link" href={item} > */}
-              <NavLink className="nav-link" to={"signup"}>
-                Sign up
-              </NavLink>
-            </li>
+                <li className="nav-item">
+                  {/* <a className="nav-link" href={item} > */}
+                  <NavLink className="nav-link" to={"signup"}>
+                    Sign up
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                {/* <a className="nav-link" href={item} > */}
+                <NavLink className="nav-link" to={"profile"}>
+                  My profile
+                </NavLink>
+              </li>
+            )}
 
             {/* {["Home", "Request", "Profile", "Login", "Signin"].map((item) => {
               return (
