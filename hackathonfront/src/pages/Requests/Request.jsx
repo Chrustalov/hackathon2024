@@ -4,8 +4,8 @@ import axios, { all } from "axios";
 import "./card.css";
 import RequestCard from "./RequestCard";
 import RequestSkeleton from "./RequestSkeleton";
+import RequestFilter from "../../components/requests_filter";
 const url = process.env.REACT_APP_API + "/api/v1/requests";
-
 
 function Request(props) {
     
@@ -36,15 +36,16 @@ function Request(props) {
         <div className="container mb-5">
             <h3 className="my-5 fw-bold">Requests</h3>
             {isFetching ? (
-                <div className="cards-inner justify-content-center">
-                    <RequestFilter initialTags={tags} onTagClick ={filter}  All_tags={all_tags} />
-                    {
-
-                        requests.map((item) => (
-                            <RequestCard key={item.title} {...item}/>
-                        ))
-                    }
-                </div>
+                    <div className="d-flex flex-column">
+                        <RequestFilter initialTags={tags} onTagClick={filter} All_tags={all_tags} />
+                        <div className="cards-inner justify-content-center mt-5">
+                            {
+                                requests.map((item) => (
+                                    <RequestCard key={item.title} {...item}/>
+                                ))
+                            }
+                        </div>
+                    </div>
                 ) : (
                 [...Array(6)].map((_, id) => (
                     <RequestSkeleton key={id}/>
@@ -54,7 +55,7 @@ function Request(props) {
     );
 
     async function filter(tags){
-        let {data} =   await get_tags(url,{tags: tags})
+        let {data} = await get_tags(url,{tags: tags})
 
         setRequests(data.requests);
         setAllTags(data.all_tags)

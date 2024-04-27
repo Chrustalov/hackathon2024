@@ -3,7 +3,7 @@ import TomSelect from 'tom-select';
 
 function RequestFilter({ initialTags, onTagClick, All_tags }) {
   const [tags, setTags] = useState(initialTags || []);
-  
+
   const selectRef = useRef(null);
 
   useEffect(() => {
@@ -16,11 +16,11 @@ function RequestFilter({ initialTags, onTagClick, All_tags }) {
       onChange: (values) => {
         setTags(values);
       },
-      closeAfterSelect: true 
+      closeAfterSelect: true
     });
 
     select.on('dropdown:show', () => {
-      // Встановлення фокусу на елементі після відкриття дропдауну
+      // Set focus to the element after dropdown is shown
       setTimeout(() => selectRef.current.focus(), 0);
     });
 
@@ -28,21 +28,19 @@ function RequestFilter({ initialTags, onTagClick, All_tags }) {
       select.destroy();
     };
   }, []);
+
   async function handleClick() {
-    setTags(tags); // Оновлення тегів перед викликом
-    await onTagClick(tags); // Виклик фільтрації після оновлення тегів
-  };
-  
+    // Update tags before invoking onTagClick
+    setTags(tags);
+    await onTagClick(tags);
+  }
 
   return (
-    <div>
-      <label htmlFor="tags">Оберіть теги:</label>
-      <select id="tags" multiple ref={selectRef} />
       <div>
-        Вибрані теги: {tags.join(', ')}
+        <label htmlFor="tags">Оберіть теги:</label>
+        <select id="tags" className="form-select form-select-sm" multiple ref={selectRef} />
+        <button className="btn btn-outline-dark mt-4" onClick={handleClick}>Застосувати фільтр</button>
       </div>
-      <button onClick={handleClick}>Застосувати фільтр</button>
-    </div>
   );
 }
 
