@@ -3,6 +3,7 @@ class Api::V1::RequestsController < ApplicationController
 
   # GET /requests
   def index
+
     @tags = Tag.where(id: params[:tags])
     @requests = Requests::Filter.call(Request.all, params)
 
@@ -19,7 +20,7 @@ class Api::V1::RequestsController < ApplicationController
       request_data_with_tags << request_attributes
     end
 
-    render json: { requests: request_data_with_tags, tags: @tags}
+    render json: { requests: request_data_with_tags, tags: @tags, all_tags: Tag.all.pluck(:name)}
   end
 
   # GET /requests/1

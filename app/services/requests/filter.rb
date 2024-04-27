@@ -10,13 +10,19 @@ class Requests::Filter < BaseService
     def call
       filter_by_tags()
     end
+
+    def select_users_requests 
+      @scope = @scope.where(user_id: params[:id])
+    end
   
     private
     def filter_by_tags()
-      return @scope if params[:tags].nil?
+      select_users_requests() if params[:id]
+
+      return @scope if params[:tags].nil? || params[:tags].empty?
         scope_filtered = @scope
         scope_filtered.joins(:tags)
-                   .where(tags: { id: params[:tags] })
+                   .where(tags: { name: params[:tags] })
                    .distinct
     end
   end
