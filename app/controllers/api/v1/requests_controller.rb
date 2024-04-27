@@ -1,5 +1,5 @@
 class Api::V1::RequestsController < ApplicationController
-  before_action :set_request, only: %i[ show update destroy ]
+  before_action :set_request, only: %i[ show update destroy end_execute start_execute ]
 
   # GET /requests
   def index
@@ -13,7 +13,6 @@ class Api::V1::RequestsController < ApplicationController
       request_attributes = request.attributes.symbolize_keys
 
       tag_names = request.tags.pluck(:name)
-
       request_attributes[:tags] = tag_names
       request_attributes[:photo] = request.photo.url
 
@@ -57,6 +56,29 @@ class Api::V1::RequestsController < ApplicationController
     @request.destroy!
   end
 
+  def start_execute 
+    if current_user 
+      @request.executor = current_user
+      if @request.save
+        render json: @request
+      else
+        render json: @request.errors, status: :unprocessable_entity
+      end
+    else 
+      render json: "Nor Auth", status: :unprocessable_entity
+    end
+    
+  end
+
+  def end_execute 
+    @request.completed = true
+    if @request.save
+      render json: @request
+    else
+      render json: @request.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_request
@@ -64,6 +86,6 @@ class Api::V1::RequestsController < ApplicationController
   end
 
   def request_params
-    params.require(:request).permit(:title, :body, :photo, tag_ids: [])
+    params.require(:request).permit(:title, :body, :photo, :executor, :completed, tag_ids: [])
   end
 end

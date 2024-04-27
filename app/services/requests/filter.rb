@@ -12,8 +12,15 @@ class Requests::Filter < BaseService
     end
 
     def select_users_requests 
-      @scope = @scope.where(user_id: params[:id])
+      user = User.find(params[:id]) # Отримання користувача за заданим айді
+    
+      if user.volunteer?
+        @scope = @scope.where(executor_id: user.id)
+      else
+        @scope = @scope.where(user_id: user.id)
+      end
     end
+    
   
     private
     def filter_by_tags()
