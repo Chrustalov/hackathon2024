@@ -6,18 +6,19 @@ import FotoCard from "../components/Profile/FotoCard";
 import SocialLinks from "../components/Profile/SocialLinks";
 import UserInfo from "../components/Profile/UserInfo";
 import ContentLoader from "react-content-loader";
-
+import RequestCard from "./Requests/RequestCard";
 
 const API_URL = process.env.REACT_APP_API + "/api/v1/profiles";
 
 const Profile = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
-
   const [profile, setProfile] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [requests, setRequests] = useState([]);
+
   const navigation = useNavigate();
   const { toastError } = useToastNotification();
-  const [isEditing, setIsEditing] = useState(false);
 
   const editProfile = useCallback(() => {
     setIsEditing(true);
@@ -27,15 +28,18 @@ const Profile = () => {
     setIsEditing(false);
   }, []);
 
-
   const onEditProfile = useCallback((newProfile) => {
     axios
-      .put(API_URL, newProfile, {
-        headers: {
-          "content-type": "application/json",
-          authorization: localStorage.getItem("token"),
-        },
-      })
+      .patch(
+        API_URL + "/" + profile.id,
+        { profile: newProfile },
+        {
+          headers: {
+            "content-type": "application/json",
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then((resp) => resp.data)
       .then((data) => {
         setProfile(data.profile);
@@ -105,7 +109,7 @@ const Profile = () => {
   }
 
   return (
-    <main style={{minHeight: "600px"}}>
+    <main style={{ minHeight: "600px" }}>
       <section>
         <div className="container py-5">
           <div className="row">
@@ -129,6 +133,21 @@ const Profile = () => {
               onEditProfile={onEditProfile}
               onCancel={onCancel}
             />
+          </div>
+        </div>
+      </section>
+      <section>
+        <div className="container py-5">
+          <div className="row">
+            <div className="col justify-content-center ">
+              <h2 className="text-center">My posts</h2>
+              <button>Create new post</button>
+            </div>
+          </div>
+          <div className="row mt-2 ">
+            {requests.map((item) => (
+              <RequestCard key={item.title} {...item} />
+            ))}
           </div>
         </div>
       </section>
