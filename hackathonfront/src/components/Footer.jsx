@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./header.css";
-import { Facebook, Google, LinkedIn, Twitter } from "./icons";
+import { Facebook, Google, Instagram, Twitter } from "./icons";
 
 function Footer() {
   return (
@@ -22,7 +22,7 @@ function Footer() {
             <Google fill={"#fff"} />
           </Link>
           <Link to={"/"} className="text-white me-4 footer-links">
-            <LinkedIn fill={"#fff"} />
+            <Instagram fill={"#fff"} />
           </Link>
         </div>
       </section>

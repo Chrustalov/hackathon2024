@@ -42,6 +42,9 @@ function App() {
       <Header />
       <Routes>
         <Route path={"/"} element={<Home />} />
+        <Route path={"/profile"} element={<Profile />}>
+          <Route path={"/profile/:id"} element={<Profile />} />
+        </Route>
         <Route path={"/requests"} element={<Request />} />
         <Route path={"/profile"} element={<Profile />}>
           <Route path={"/profile/:id"} element={<Profile />} />

@@ -2,14 +2,49 @@ import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios"; // або інша бібліотека для запитів
 import { useNavigate, useParams } from "react-router-dom";
 import { useToastNotification } from "../hooks/useToastNotification";
+import FotoCard from "../components/Profile/FotoCard";
+import SocialLinks from "../components/Profile/SocialLinks";
+import UserInfo from "../components/Profile/UserInfo";
+import ContentLoader from "react-content-loader";
+
 
 const API_URL = process.env.REACT_APP_API + "/api/v1/profiles";
 
 const Profile = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
+
+  const [profile, setProfile] = useState(null);
   const navigation = useNavigate();
-  const {toastError} = useToastNotification();
+  const { toastError } = useToastNotification();
+  const [isEditing, setIsEditing] = useState(false);
+
+  const editProfile = useCallback(() => {
+    setIsEditing(true);
+  }, []);
+
+  const onCancel = useCallback(() => {
+    setIsEditing(false);
+  }, []);
+
+
+  const onEditProfile = useCallback((newProfile) => {
+    axios
+      .put(API_URL, newProfile, {
+        headers: {
+          "content-type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((resp) => resp.data)
+      .then((data) => {
+        setProfile(data.profile);
+        setIsEditing(false);
+      })
+      .catch((error) => {
+        toastError(error.response?.status?.message);
+      });
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,48 +58,80 @@ const Profile = () => {
               },
         })
         .then((resp) => resp.data)
-        .then((data) => setUser(data))
+        .then((data) => {
+          console.log(data);
+          setUser(data.user);
+          setProfile(data.profile);
+        })
         .catch((error) => {
           toastError("Please sign in to view this page");
           navigation("/signin");
         });
     };
     fetchUser();
-  }, [id]);
+  }, [id, navigation]);
+
+  const [links, setLinks] = useState([
+    "https://www.facebook.com/",
+    "https://www.g.com/",
+    "https://www.instagram.com/",
+  ]);
+
+  const addLink = useCallback((newLink) => {
+    setLinks((prev) => [...prev, newLink]);
+  }, []);
+
+  const removeLink = useCallback((index) => {
+    setLinks((prev) => prev.filter((_, i) => i !== index));
+  }, []);
+
+  const editLink = useCallback((index, newLink) => {
+    setLinks((prev) => prev.map((link, i) => (i === index ? newLink : link)));
+  }, []);
+
+  if (!user || !profile) {
+    return (
+      <ContentLoader
+        speed={2}
+        width={350}
+        height={380}
+        viewBox="0 0 390 440"
+        backgroundColor="#f3f3f3"
+        foregroundColor="#ecebeb"
+      >
+        <rect x="0" y="8" rx="8" ry="8" width="400" height="550" />
+      </ContentLoader>
+    );
+  }
 
   return (
-    <main>
-      <div className="container-md mt-5">
-        <div className="row">
-          <div className="col-md-6">
-            <img
-              src="user_avatar.jpg"
-              alt="User Avatar"
-              className="img-fluid mb-3 rounded-circle"
-              style={{ maxWidth: "100px" }}
+    <main style={{minHeight: "600px"}}>
+      <section>
+        <div className="container py-5">
+          <div className="row">
+            <FotoCard
+              aboutMe={profile?.about_me}
+              avatarUrl={profile?.avatar.url}
+              name={user.name}
+              isEditing={isEditing && !id}
+              onEditProfile={editProfile}
+            >
+              <SocialLinks
+                links={links}
+                addLink={addLink}
+                editLink={editLink}
+                removeLink={removeLink}
+              />
+            </FotoCard>
+            <UserInfo
+              profile={profile}
+              isEditing={isEditing}
+              onEditProfile={onEditProfile}
+              onCancel={onCancel}
             />
           </div>
-          <div className="col-md-6">
-            <a href="/edit_profile" className="btn btn-sm btn-primary">
-              Редагувати профіль
-            </a>
-          </div>
         </div>
-        <div className="row">
-          <div className="col-md-5">
-            <div className="user-info">
-              <h1>Ім'я Користувача</h1>
-              <p>Email: user@example.com</p>
-              <p>Дата народження: 01/01/1990</p>
-              {user?.user?.name}
-            </div>
-          </div>
-          <div className="col-md-7">
-            <p>Про себе: Додаткові дані про користувача...</p>
-            {/* Тут можуть бути інші дані профілю */}
-          </div>
-        </div>
-      </div>
+      </section>
     </main>
   );
 };
