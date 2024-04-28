@@ -99,3 +99,17 @@ devise_jwt_secret_key: (copy and paste the generated secret here)
 
 - https://main--tourmaline-entremet-72ecbb.netlify.app/
 
+### Placing a web application on hosting
+
+- https://main--tourmaline-entremet-72ecbb.netlify.app/
+
+## Step-by-step development of events through the eyes of a user on a website 
+
+- Users can register on the site for the first time and, if they are already registered, they should log in. 
+- They can become a contractor or a customer. When registering, the user can provide detailed information about himself (phone number, about himself, email, location, first and last name) to ensure the reliability of the person.
+- User capabilities:
+    - The contractor will be able to take orders for execution.
+    - The customer can create requests, mark requests as completed, and edit requests.
+    - General: The user can search for requests by name or tags (for example, city).
+
+
