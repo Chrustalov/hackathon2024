@@ -15,6 +15,8 @@ function Request(props) {
   const [tags, setTags] = useState([]);
   const [all_tags, setAllTags] = useState([]);
   const { contextValue} = useContext(UserContext);
+
+  console.log(process.env.REACT_APP_API);
   useEffect(() => {
     const fetchRequests = async () => {
       try {
