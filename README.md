@@ -1,34 +1,27 @@
-rRequirments
+## Requirments
 
-Ruby
-Rails
-Postgresql
-Node.js
-React
-
-Database creation & initialization
-
-rake db:create db:migrate db:seed
-or database created and we need recreate
-rake db:drop db:create db:migrate db:seed
+- Ruby `3.2.2`
+- Rails `7.1.3.2`
+Postgresql `14`
+Node.js `18v +`
+React `18.2`
 
 
-Things you may want to cover:
+## Database creation & initialization
 
-* Ruby version
+`rake db:create db:migrate db:seed`
+- When database is created and we need recreate:
+`rake db:drop db:create db:migrate db:seed`
 
-* System dependencies
 
-* Configuration
+## Run
 
-* Database creation
+### Rails api server
 
-* Database initialization
+Directory: /
+`rails s`
 
-* How to run the test suite
+### React app
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`cd hackathonfront`
+`npm start`
