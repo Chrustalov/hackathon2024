@@ -1,3 +1,5 @@
+# Hackathon App
+
 ## Requirments
 
 - Ruby `3.2.2`
@@ -96,5 +98,4 @@ devise_jwt_secret_key: (copy and paste the generated secret here)
 ### Placing a web application on hosting
 
 - https://main--tourmaline-entremet-72ecbb.netlify.app/
-
 
