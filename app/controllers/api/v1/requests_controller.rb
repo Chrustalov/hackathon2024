@@ -37,6 +37,7 @@ class Api::V1::RequestsController < ApplicationController
 
   # POST /requests
   def create
+    pry
     tags = params[:tag_ids].map { |tag_id| Tag.find(tag_id) }
     @request = current_user.requests.build(request_params)
     @request.tags << tags
@@ -72,7 +73,6 @@ class Api::V1::RequestsController < ApplicationController
     else 
       render json: "Nor Auth", status: :unprocessable_entity
     end
-    
   end
 
   def end_execute 

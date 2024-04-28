@@ -1,11 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import './search.css';
 
 const FoundRequest = (props) => {
     return (
         <Link
-            className="card"
+            className="card full-width"
             to={{
                 pathname: `/view-request-details/${props.id}`,
                 state: { request_id: props.id }
@@ -13,7 +12,7 @@ const FoundRequest = (props) => {
         >
             <div className="card-body">
                 <div className="d-flex align-items-center">
-                    <img src={'http://localhost:3000' + props.photo}  className="" alt="Fissure in Sandstone"/>
+                    <img src={'http://localhost:3000' + props.photo}  className="full-search-img" alt="Fissure in Sandstone"/>
                     <div className="d-flex flex-column mx-4">
                         <h5 className="card-title">{props.title}</h5>
                         <p className="card-text">{props.body}</p>
