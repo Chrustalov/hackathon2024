@@ -7,7 +7,13 @@ const TAGS_URL = process.env.REACT_APP_API + "/api/v1/tags";
 
 export const useCreateRequest = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [request, setReques] = useState({});
+  const [request, setReques] = useState({
+    title: "",
+    body: "",
+    photo: "",
+    tags: [],
+    tags_ids: [],
+  });
   const [tags, setTags] = useState([]);
   const { toastSuccess, toastError } = useToastNotification();
 
@@ -30,6 +36,7 @@ export const useCreateRequest = () => {
   
 
   const close = useCallback(() => {
+    setReques({});
     setIsOpen(false);
   }, []);
 
@@ -38,7 +45,7 @@ export const useCreateRequest = () => {
     axios
       .post(
         REQUEST_URL,
-        { request },
+        { ...request },
         {
           headers: {
             "Content-Type": "application/json",

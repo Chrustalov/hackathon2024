@@ -20,26 +20,33 @@ function CreateRequestModal({
 
   const onChangeTitle = useCallback(
     (e) => {
-      setRequest({ ...request, title: e.target.value });
+      console.log("change title", request);
+      return setRequest({ ...request, title: e.target.value });
     },
-    [request]
+    [request, setRequest]
   );
   const onChangeDescription = useCallback(
     (e) => {
-      setRequest({ ...request, body: e.target.value });
+      console.log("change description", request);
+      return setRequest({ ...request, body: e.target.value });
     },
-    [request]
+    [request, setRequest]
   );
   const onTagsChange = useCallback(
     (tags) => {
-      setRequest({ ...request, tags });
+      console.log(tags, request, "tags request");
+      setRequest({ ...request, tags: tags });
     },
-    [request, tags]
+    [request, setRequest]
   );
 
-  const onPhoteChange = useCallback((url) => {
-    setRequest({ ...request, photo: url });
-  }, [])
+  const onPhoteChange = useCallback(
+    (url) => {
+      console.log("change photo", request);
+      setRequest({ ...request, photo: url });
+    },
+    [request, setRequest]
+  );
 
   const onSave = (e) => {
     e.preventDefault();
@@ -48,7 +55,7 @@ function CreateRequestModal({
     if (form.checkValidity()) {
       onSubmit({
         ...request,
-        tags: tags
+        tag_ids: tags
           .filter((tag) => !!request?.tags?.find((name) => tag.name === name))
           .map((tag) => tag.id),
       });
@@ -145,9 +152,7 @@ function CreateRequestModal({
   );
 }
 
-function RequestFilter({ initialTags = [], onClick, All_tags = [] }) {
-  const [tags, setTags] = useState(initialTags);
-
+function RequestFilter({ initialTags = [], onClick, All_tags = []}) {
   const selectRef = useRef(null);
 
   useEffect(() => {
@@ -158,9 +163,9 @@ function RequestFilter({ initialTags = [], onClick, All_tags = [] }) {
       labelField: "label",
       options: All_tags.map((tag) => ({ value: tag.name, label: tag.name })),
       onChange: (values) => {
-        console.log(values);
         onClick(values);
       },
+      items: initialTags,
       closeAfterSelect: true,
     });
 
@@ -171,7 +176,7 @@ function RequestFilter({ initialTags = [], onClick, All_tags = [] }) {
     return () => {
       select.destroy();
     };
-  }, [selectRef, All_tags]);
+  });
 
   return (
     <div className="row mt-3">

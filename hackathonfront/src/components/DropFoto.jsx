@@ -10,18 +10,13 @@ function DropFoto({ className = "", url = "", setUrl }) {
     e.preventDefault();
     e.stopPropagation();
     setFile(e.dataTransfer.files[0]);
-  });
+  }, []);
 
   useEffect(() => {
     if (file) {
       upLoadOnServer(file).then((url) => setUrl(url));
     }
   }, [file, setUrl]);
-
-  useEffect(() => {
-    if (!inputRef?.current?.files[0]) return;
-    setFile(inputRef.current.files[0]);
-  }, [inputRef, setFile]);
 
   const handleClick = useCallback(() => {
     inputRef.current.click();
@@ -54,7 +49,7 @@ function DropFoto({ className = "", url = "", setUrl }) {
           <p>Drop your foto here</p>
         </div>
       ) : (
-        <div className="container">
+        <div className="container dropzone">
           <div
             className="row justify-content-center align-items-center"
             style={{ height: "300px" }}

@@ -118,7 +118,7 @@ const Profile = () => {
       <section>
         <div className="container py-5">
           <div className="row">
-            <FotoCard
+            {!isEditing && <FotoCard
               aboutMe={profile?.about_me}
               avatarUrl={profile?.avatar.url}
               name={user.name}
@@ -131,7 +131,7 @@ const Profile = () => {
                 editLink={editLink}
                 removeLink={removeLink}
               />
-            </FotoCard>
+            </FotoCard>}
             <UserInfo
               profile={profile}
               isEditing={isEditing}
