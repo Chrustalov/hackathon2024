@@ -14,7 +14,7 @@ import Footer from "./components/Footer";
 import RequestDetails from "./pages/Requests/RequestDetails";
 import Login from "./pages/Login";
 import ScrollToTop from "./components/ScrollToTop";
-const API_URL = "http://localhost:3000/api/v1/requests";
+const API_URL = process.env.REACT_APP_API + "/api/v1/requests";
 
 function getAPIData() {
   return axios.get(API_URL).then((resp) => resp.data);

@@ -22,7 +22,7 @@ const LatestPost = (props) => {
             </div>
             <div className="lpa-right">
                 <a href="#">
-                    <img src={'http://localhost:3000' + props.photo.url} title="" alt="" />
+                    <img src={process.env.REACT_APP_API + props.photo.url} title="" alt="" />
                 </a>
             </div>
         </Link>

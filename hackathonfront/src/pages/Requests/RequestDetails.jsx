@@ -78,7 +78,7 @@ const RequestDetails = () => {
                         <div className="col-lg-8 m-15px-tb">
                             <article className="article">
                                 <div className="article-img">
-                                    <img src={'http://localhost:3000' + request.photo.url} title="" alt="" />
+                                    <img src={process.env.REACT_APP_API + request.photo.url} title="" alt="" />
                                 </div>
                                 <div className="article-title">
                                     <h2>{request.title}</h2>
@@ -123,7 +123,7 @@ const RequestDetails = () => {
                                 <div className="widget-body">
                                     <div className="media align-items-center d-flex">
                                         <div className="avatar">
-                                            <img src={'http://localhost:3000' + profile.avatar.url} title="" alt="" />
+                                            <img src={process.env.REACT_APP_API + profile.avatar.url} title="" alt="" />
                                         </div>
                                         <div className="media-body">
                                             <h6>Hello, I'm<br /> {profile.first_name} {profile.last_name}</h6>
@@ -147,7 +147,7 @@ const RequestDetails = () => {
                                 <div className="widget-body">
                                     <div className="media align-items-center d-flex">
                                         <div className="avatar">
-                                            <img src={'http://localhost:3000' + executor_profile.avatar.url} title="" alt="" />
+                                            <img src={process.env.REACT_APP_API + executor_profile.avatar.url} title="" alt="" />
                                         </div>
                                         <div className="media-body mx-auto">
                                             <h6>Hello, I'm<br /> {executor_profile.first_name} {executor_profile.last_name}</h6>
