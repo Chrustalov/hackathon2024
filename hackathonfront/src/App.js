@@ -14,7 +14,11 @@ import Footer from "./components/Footer";
 import RequestDetails from "./pages/Requests/RequestDetails";
 import Login from "./pages/Login";
 import ScrollToTop from "./components/ScrollToTop";
+const API_URL = 'https://hackaton-9507e74b8c0c.herokuapp.com' + "/api/v1/requests";
 
+function getAPIData() {
+  return axios.get(API_URL).then((resp) => resp.data);
+}
 
 export const UserContext = createContext(null);
 function App() {

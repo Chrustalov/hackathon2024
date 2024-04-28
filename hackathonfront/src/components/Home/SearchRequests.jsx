@@ -4,7 +4,7 @@ import './search.css';
 import FoundRequest from "./FoundRequest";
 
 const SearchRequests = () => {
-    const url = process.env.REACT_APP_API + "/api/v1/requests?title=";
+    const url = 'https://hackaton-9507e74b8c0c.herokuapp.com' + "/api/v1/requests?title=";
 
     const [query, setQuery] = useState('');
     const [requests, setRequests] = useState([]);
