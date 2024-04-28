@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./header.css";
 import { NavLink, useLocation } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const updateActiveItem = (target, horiSelector) => {
   if (!target || !horiSelector) return;
   const activeWidthNewAnimHeight = target.clientHeight;
@@ -16,10 +16,22 @@ const updateActiveItem = (target, horiSelector) => {
 };
 
 function Header() {
+  const navigate = useNavigate();
   const tabsNewAnimRef = useRef(null);
   const horiSelectorRef = useRef(null);
   const router = useLocation();
 
+
+
+  function logout(){
+  if(localStorage.getItem('token')){
+    localStorage.removeItem('token')
+  }
+  if(localStorage.getItem('appState')){
+    localStorage.removeItem('appState')
+  }
+  navigate('/');
+  }
   useEffect(() => {
     if(!tabsNewAnimRef.current || !horiSelectorRef.current) return;
     const tabsNewAnim = tabsNewAnimRef.current;
@@ -147,13 +159,18 @@ function Header() {
                   </NavLink>
                 </li>
               </>
-            ) : (
-              <li className="nav-item">
+            ) : (<>
+            <li className="nav-item">
                 {/* <a className="nav-link" href={item} > */}
                 <NavLink className="nav-link" to={"profile"}>
                   My profile
                 </NavLink>
               </li>
+               <li className="nav-item">
+                <button className="nav-link" onClick={logout}>Log Out</button>
+             </li>
+            </>
+              
             )}
 
             {/* {["Home", "Request", "Profile", "Login", "Signin"].map((item) => {

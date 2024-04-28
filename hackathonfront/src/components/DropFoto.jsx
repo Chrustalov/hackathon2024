@@ -10,13 +10,14 @@ function DropFoto({ className = "", url = "", setUrl }) {
     e.preventDefault();
     e.stopPropagation();
     setFile(e.dataTransfer.files[0]);
+    upLoadOnServer(e.dataTransfer.files[0]).then((url) => setUrl(url));
   }, []);
 
-  useEffect(() => {
-    if (file) {
-      upLoadOnServer(file).then((url) => setUrl(url));
-    }
-  }, [file, setUrl]);
+  // useEffect(() => {
+  //   if (file) {
+  //     upLoadOnServer(file).then((url) => setUrl(url));
+  //   }
+  // }, [file, setUrl]);
 
   const handleClick = useCallback(() => {
     inputRef.current.click();
@@ -26,6 +27,7 @@ function DropFoto({ className = "", url = "", setUrl }) {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
     console.log("Вибраний файл:", selectedFile);
+    upLoadOnServer(selectedFile).then((url) => setUrl(url));
   }, []);
 
   return (
