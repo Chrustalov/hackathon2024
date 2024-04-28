@@ -47,7 +47,7 @@ function Request(props) {
             onTagClick={filter}
             All_tags={all_tags}
           />
-          <div className="cards-inner justify-content-center mt-5">
+          <div className="row mt-5  justify-content-center ">
             {requests.map((item) => (
               <RequestCard key={item.title} {...item} />
             ))}

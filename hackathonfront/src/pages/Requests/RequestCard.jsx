@@ -38,9 +38,9 @@ const RequestCard = (props) => {
     }
 
     return (
-        <div className="card">
+        <div className="col-sm-5 col-md-4 col-10 col-lg-3  ">
             <img src={'http://localhost:3000' + props.photo}  className="card-img-top" alt="Fissure in Sandstone"/>
-            <div className="card-body">
+            <div className="">
                 <h5 className="card-title">{props.title}</h5>
                 <p className="card-text">{props.body}</p>
                 <p className="card-text">
@@ -58,7 +58,7 @@ const RequestCard = (props) => {
             </div>
             <div className="card-footer">
                 <Link
-                    className="btn btn-primary mt-auto"
+                    className="btn btn-outline-dark  mt-1"
                     to={{
                         pathname: `/view-request-details/${props.id}`,
                         state: { request_id: props.id }
