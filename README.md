@@ -112,4 +112,27 @@ devise_jwt_secret_key: (copy and paste the generated secret here)
     - The customer can create requests, mark requests as completed, and edit requests.
     - General: The user can search for requests by name or tags (for example, city).
 
+## Extended version of the product (steps in future)
 
+1. Ability to administer the website. 
+  - The administrator will be able to:
+    - check user requests.
+    - create categories of requests.
+    - create tags for requests.
+    - modify the content of the main page (i.e. add a banner or swiper, etc.)
+    - ban users who are suspected of falsifying information about a request.
+    - view statistics of requests and users 
+
+2. Integration with Diia, charitable foundations.
+
+3. Ability to create secure requests. 
+  - The user must be identified on the profile page with a passport.
+
+4. Advanced filtering of requests by tags, categories, creation date, execution date, security.
+
+5. Add status extensions for the request:
+  - canceled 
+  - fraud
+  - suspended
+
+6. Cloud storage for storing all completed requests in the form of pdf files. The certificates should contain information about the request, author and executor, and the status of the request.
