@@ -21,19 +21,17 @@ function Header() {
   const horiSelectorRef = useRef(null);
   const router = useLocation();
 
-
-
-  function logout(){
-  if(localStorage.getItem('token')){
-    localStorage.removeItem('token')
-  }
-  if(localStorage.getItem('appState')){
-    localStorage.removeItem('appState')
-  }
-  navigate('/');
+  function logout() {
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    }
+    if (localStorage.getItem("appState")) {
+      localStorage.removeItem("appState");
+    }
+    navigate("/");
   }
   useEffect(() => {
-    if(!tabsNewAnimRef.current || !horiSelectorRef.current) return;
+    if (!tabsNewAnimRef.current || !horiSelectorRef.current) return;
     const tabsNewAnim = tabsNewAnimRef.current;
     const horiSelector = horiSelectorRef.current;
 
@@ -53,7 +51,8 @@ function Header() {
     const handleTogglerClick = () => {
       document.querySelector(".navbar-collapse").classList.toggle("show");
       setTimeout(
-        () => updateActiveItem(tabsNewAnim.querySelector(".active"), horiSelector),
+        () =>
+          updateActiveItem(tabsNewAnim.querySelector(".active"), horiSelector),
         0
       );
     };
@@ -159,30 +158,21 @@ function Header() {
                   </NavLink>
                 </li>
               </>
-            ) : (<>
-            <li className="nav-item">
-                {/* <a className="nav-link" href={item} > */}
-                <NavLink className="nav-link" to={"profile"}>
-                  My profile
-                </NavLink>
-              </li>
-               <li className="nav-item">
-                <button className="nav-link" onClick={logout}>Log Out</button>
-             </li>
-            </>
-              
-            )}
-
-            {/* {["Home", "Request", "Profile", "Login", "Signin"].map((item) => {
-              return (
-                <li className="nav-item" key={item}>
-                  {/* <a className="nav-link" href={item} > }
-                  <NavLink className="nav-link" to={item}>
-                    {item}
+            ) : (
+              <>
+                <li className="nav-item">
+                  {/* <a className="nav-link" href={item} > */}
+                  <NavLink className="nav-link" to={"profile"}>
+                    My profile
                   </NavLink>
                 </li>
-              );
-            })} */}
+                <li className="z-3 mx-3  align-content-center ">
+                  <button className="btn btn-outline-dark " onClick={logout}>
+                    Log out
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>
