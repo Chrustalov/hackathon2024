@@ -21,7 +21,6 @@
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
     "build": "react-scripts build",
-    "prod": "set REACT_APP_API=https://hackaton-9507e74b8c0c.herokuapp.com/ && react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -42,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }
