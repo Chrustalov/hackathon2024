@@ -113,6 +113,7 @@ const Profile = () => {
   }
 
   return (
+    <>
     <main style={{ minHeight: "600px" }}>
       <section>
         <div className="container py-5">
@@ -152,8 +153,9 @@ const Profile = () => {
           </div>
         </div>
       </section>
-      {modal}
     </main>
+    {modal}
+    </>
   );
 };
 

@@ -225,6 +225,8 @@ code {
   &::-webkit-user-drag {
     background-color: red
   };
+}
 
-
+::-webkit-scrollbar {
+  width: 0px;
 }

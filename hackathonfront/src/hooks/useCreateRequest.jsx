@@ -10,6 +10,7 @@ export const useCreateRequest = () => {
   const [request, setReques] = useState({});
   const [tags, setTags] = useState([]);
   const { toastSuccess, toastError } = useToastNotification();
+
   useEffect(() => {
     const fetchTags = async () => {
       axios
@@ -26,6 +27,7 @@ export const useCreateRequest = () => {
   const open = useCallback(() => {
     setIsOpen(true);
   }, []);
+  
 
   const close = useCallback(() => {
     setIsOpen(false);

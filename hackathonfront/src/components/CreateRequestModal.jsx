@@ -37,6 +37,10 @@ function CreateRequestModal({
     [request, tags]
   );
 
+  const onPhoteChange = useCallback((url) => {
+    setRequest({ ...request, photo: url });
+  }, [])
+
   const onSave = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -57,12 +61,12 @@ function CreateRequestModal({
 
   return (
     <div
-      className="modal d-block end-0 bottom-0 overflow-hidden "
+      className="modal d-block end-0 bottom-0"
       aria-labelledby="createRequestModalLabel"
       aria-hidden="true"
       onClick={handleOutsideClick}
     >
-      <div className="modal-dialog h-100">
+      <div className="modal-dialog  modal-dialog-scrollable">
         <div
           className="modal-content "
           style={{ marginTop: "20%" }}
@@ -114,7 +118,7 @@ function CreateRequestModal({
                 onClick={onTagsChange}
                 All_tags={tags}
               />
-              <DropFoto  />
+              <DropFoto setUrl={onPhoteChange} url={request.photo} />
             </form>
           </div>
 
