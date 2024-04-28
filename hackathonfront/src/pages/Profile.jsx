@@ -39,7 +39,7 @@ const Profile = () => {
         { profile: newProfile },
         {
           headers: {
-            "content-type": "application/json",
+            'Content-Type': 'multipart/form-data',
             authorization: localStorage.getItem("token"),
           },
         }

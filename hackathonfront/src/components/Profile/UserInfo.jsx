@@ -47,8 +47,6 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
     onCancel();
   }, [profile, onCancel]);
 
-
-
   return (
     <>
       {isEditing && (

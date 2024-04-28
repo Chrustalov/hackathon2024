@@ -14,8 +14,8 @@ class Api::V1::ProfilesController < ApplicationController
         render json: { user: @user, profile: @user.profile}
     end
 
-    def update 
-        if current_user && @profile.update(profile_params) 
+    def update
+        if current_user && @profile.update(profile_params)
             render json: { user: current_user, profile: @profile}
           else
             render json: @request.errors, status: :unprocessable_entity
