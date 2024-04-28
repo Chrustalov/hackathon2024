@@ -66,6 +66,7 @@ function DropFoto({ className = "", file, setFile }) {
       )}
       <input
         type="file"
+        accept="image/*"
         className="upload-input d-none"
         ref={inputRef}
         onChange={handleFileChange}
