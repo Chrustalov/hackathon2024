@@ -63,7 +63,7 @@ $ rails secret
 devise_jwt_secret_key: (copy and paste the generated secret here) 
 ```
 
-- We have some error about .env (change in .env.development url to [http://local](http://localhost:3000/)):
+- We have some error about .env (change in .env.development url to [http://localhost:3000/](http://localhost:3000/)):
 ```
 'https://hackaton-9507e74b8c0c.herokuapp.com' to process.env.REACT_APP_API
 ```
