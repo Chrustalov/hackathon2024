@@ -9,14 +9,14 @@ const initialState = {
   phone_number: "",
   city: "",
   about_me: "",
-  avatar: {
-    url: "/uploads/profile/avatar/1/avatar.png",
-  },
+  avatar: null,
 };
 
 function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  
   useEffect(() => {
+    console.log("profile", profile);
     if (profile) {
       dispatch({ type: "SET_STATE", payload: profile });
     }
@@ -24,8 +24,8 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
 
 
 
-  const setUrl = useCallback((url) => {
-    dispatch({ type: "SET_AVATAR", payload: { url } });
+  const setAvatar = useCallback((file) => {
+    dispatch({ type: "SET_AVATAR", payload: file });
   }, []);
   const onFirstNameChange = useCallback((e) => {
     dispatch({ type: "SET_FIRST_NAME", payload: e.target.value });
@@ -54,7 +54,7 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
       {isEditing && (
         <div className="col-lg-4 ">
           <div className="mb-4 border border-1 border-black rounded-5 pb-2 ">
-            <DropFoto url={state.avatar.url} setUrl={setUrl} />
+            <DropFoto file={state.avatar} setFile={setAvatar} />
           </div>
         </div>
       )}
@@ -145,7 +145,8 @@ function reducer(state, action) {
     case "SET_ABOUT_ME":
       return { ...state, about_me: action.payload };
     case "SET_AVATAR":
-      return { ...state, avatar: { url: action.payload.url } };
+      console.log("reducer SET_AVATAR ", action.payload, state.avatar);
+      return { ...state, avatar: action.payload };
     default:
       return state;
   }

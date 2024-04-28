@@ -40,10 +40,10 @@ function CreateRequestModal({
     [request, setRequest]
   );
 
-  const onPhoteChange = useCallback(
-    (url) => {
+  const onPhotoChange = useCallback(
+    (photo) => {
       console.log("change photo", request);
-      setRequest({ ...request, photo: url });
+      setRequest({ ...request, photo: photo });
     },
     [request, setRequest]
   );
@@ -125,7 +125,7 @@ function CreateRequestModal({
                 onClick={onTagsChange}
                 All_tags={tags}
               />
-              <DropFoto setUrl={onPhoteChange} url={request.photo} />
+              <DropFoto setFile={onPhotoChange} file={request.photo} />
             </form>
           </div>
 

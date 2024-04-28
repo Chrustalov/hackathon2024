@@ -32,6 +32,7 @@ const Profile = () => {
   }, []);
 
   const onEditProfile = useCallback((newProfile) => {
+    console.log("Save new profile",newProfile);
     axios
       .patch(
         PROFILE_URL + "/" + newProfile.id,
