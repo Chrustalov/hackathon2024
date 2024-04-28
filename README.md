@@ -1,4 +1,4 @@
-Requirments
+rRequirments
 
 Ruby
 Rails
