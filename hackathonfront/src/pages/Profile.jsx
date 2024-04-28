@@ -10,8 +10,8 @@ import RequestCard from "./Requests/RequestCard";
 import Request from "./Requests/Request";
 import { useCreateRequest } from "../hooks/useCreateRequest";
 
-const PROFILE_URL = process.env.REACT_APP_API + "/api/v1/profiles";
-const REQUEST_URL = process.env.REACT_APP_API + "/api/v1/requests";
+const PROFILE_URL = https://hackaton-9507e74b8c0c.herokuapp.com/ + "/api/v1/profiles";
+const REQUEST_URL = https://hackaton-9507e74b8c0c.herokuapp.com/ + "/api/v1/requests";
 
 const Profile = () => {
   const { id } = useParams();

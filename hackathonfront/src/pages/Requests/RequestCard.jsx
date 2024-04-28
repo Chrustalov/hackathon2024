@@ -39,7 +39,7 @@ const RequestCard = (props) => {
 
     return (
         <div className="col-sm-5 col-md-4 col-10 col-lg-3  ">
-            <img src={process.env.REACT_APP_APIs + props.photo}  className="card-img-top" alt="Fissure in Sandstone"/>
+            <img src={https://hackaton-9507e74b8c0c.herokuapp.com/s + props.photo}  className="card-img-top" alt="Fissure in Sandstone"/>
             <div className="">
                 <h5 className="card-title">{props.title}</h5>
                 <p className="card-text">{props.body}</p>

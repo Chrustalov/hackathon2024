@@ -6,7 +6,7 @@ import RequestSkeleton from "./RequestSkeleton";
 import LatestPost from "./LatestPost";
 import { useContext } from "react";
 import { UserContext } from "../../App";
-const url = process.env.REACT_APP_API + "/api/v1/requests/";
+const url = https://hackaton-9507e74b8c0c.herokuapp.com/ + "/api/v1/requests/";
 
 const RequestDetails = () => {
     const { id } = useParams();
@@ -22,7 +22,7 @@ const RequestDetails = () => {
     const navigate = useNavigate(); // Використовуйте useNavigate замість useHistory
     async function startExecute(){
         console.log(contextValue)
-        const c_url = process.env.REACT_APP_API + "/api/v1/requests/" + request.id +"/start_execute";
+        const c_url = https://hackaton-9507e74b8c0c.herokuapp.com/ + "/api/v1/requests/" + request.id +"/start_execute";
         const { data } = await axios.patch(
             c_url,
             {}, // Порожній об'єкт даних, оскільки ви не відправляєте додаткові дані
@@ -38,7 +38,7 @@ const RequestDetails = () => {
         setExecutorProfile(data.profile);
     }
     async function endExecute(){
-        const c_url = process.env.REACT_APP_API + "/api/v1/requests/" + request.id +"/end_execute";
+        const c_url = https://hackaton-9507e74b8c0c.herokuapp.com/ + "/api/v1/requests/" + request.id +"/end_execute";
         const {data} = await axios.patch(c_url);
         setRequest(data.request)
     }
@@ -78,7 +78,7 @@ const RequestDetails = () => {
                         <div className="col-lg-8 m-15px-tb">
                             <article className="article">
                                 <div className="article-img">
-                                    <img src={process.env.REACT_APP_API + request.photo.url} title="" alt="" />
+                                    <img src={https://hackaton-9507e74b8c0c.herokuapp.com/ + request.photo.url} title="" alt="" />
                                 </div>
                                 <div className="article-title">
                                     <h2>{request.title}</h2>
@@ -123,7 +123,7 @@ const RequestDetails = () => {
                                 <div className="widget-body">
                                     <div className="media align-items-center d-flex">
                                         <div className="avatar">
-                                            <img src={process.env.REACT_APP_API + profile.avatar.url} title="" alt="" />
+                                            <img src={https://hackaton-9507e74b8c0c.herokuapp.com/ + profile.avatar.url} title="" alt="" />
                                         </div>
                                         <div className="media-body">
                                             <h6>Hello, I'm<br /> {profile.first_name} {profile.last_name}</h6>
@@ -147,7 +147,7 @@ const RequestDetails = () => {
                                 <div className="widget-body">
                                     <div className="media align-items-center d-flex">
                                         <div className="avatar">
-                                            <img src={process.env.REACT_APP_API + executor_profile.avatar.url} title="" alt="" />
+                                            <img src={https://hackaton-9507e74b8c0c.herokuapp.com/ + executor_profile.avatar.url} title="" alt="" />
                                         </div>
                                         <div className="media-body mx-auto">
                                             <h6>Hello, I'm<br /> {executor_profile.first_name} {executor_profile.last_name}</h6>

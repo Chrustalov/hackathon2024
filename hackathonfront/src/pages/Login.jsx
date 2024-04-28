@@ -375,7 +375,7 @@ function Login() {
     try {
       const response = await axios
         .post(
-          process.env.REACT_APP_API + endPoint,
+          https://hackaton-9507e74b8c0c.herokuapp.com/ + endPoint,
           {
             user: {
               name,
