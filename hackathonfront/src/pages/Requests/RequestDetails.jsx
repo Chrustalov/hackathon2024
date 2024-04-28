@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { UserContext } from "../../App";
 import RequestCard from "./RequestCard";
 import { useToastNotification } from "../../hooks/useToastNotification";
-const url = process.env.REACT_APP_API + "/api/v1/requests/";
+const url = "https://hackaton-9507e74b8c0c.herokuapp.com" + "/api/v1/requests/";
 
 const RequestDetails = () => {
   const { id } = useParams();
@@ -26,7 +26,7 @@ const RequestDetails = () => {
   async function startExecute() {
     console.log(contextValue);
     const c_url =
-      process.env.REACT_APP_API +
+      "https://hackaton-9507e74b8c0c.herokuapp.com" +
       "/api/v1/requests/" +
       request.id +
       "/start_execute";
@@ -46,7 +46,7 @@ const RequestDetails = () => {
   }
   async function endExecute() {
     const c_url =
-      process.env.REACT_APP_API +
+      "https://hackaton-9507e74b8c0c.herokuapp.com" +
       "/api/v1/requests/" +
       request.id +
       "/end_execute";
@@ -91,7 +91,10 @@ const RequestDetails = () => {
               <article className="article">
                 <div className="article-img">
                   <img
-                    src={process.env.REACT_APP_API + request.photo.url}
+                    src={
+                      "https://hackaton-9507e74b8c0c.herokuapp.com" +
+                      request.photo.url
+                    }
                     title=""
                     alt=""
                   />
@@ -146,9 +149,15 @@ const RequestDetails = () => {
                 </div> */}
                 <div className="row mt-5  justify-content-center ">
                   {latest_posts.map((item) => {
-                    item.tags = []
+                    item.tags = [];
                     console.log(item);
-                    return <RequestCard key={item.title} {...item} photo={item.photo.url} />;
+                    return (
+                      <RequestCard
+                        key={item.title}
+                        {...item}
+                        photo={item.photo.url}
+                      />
+                    );
                   })}
                 </div>
               </div>
@@ -162,7 +171,10 @@ const RequestDetails = () => {
                   <div className="media align-items-center d-flex">
                     <div className="avatar">
                       <img
-                        src={process.env.REACT_APP_API + profile.avatar.url}
+                        src={
+                          "https://hackaton-9507e74b8c0c.herokuapp.com" +
+                          profile.avatar.url
+                        }
                         title=""
                         alt=""
                       />
@@ -200,7 +212,7 @@ const RequestDetails = () => {
                       <div className="avatar">
                         <img
                           src={
-                            process.env.REACT_APP_API +
+                            "https://hackaton-9507e74b8c0c.herokuapp.com" +
                             executor_profile.avatar.url
                           }
                           title=""

@@ -13,7 +13,7 @@ const FoundRequest = (props) => {
         <div className="card-body">
           <div className="d-flex align-items-center">
             <img
-              src={process.env.REACT_APP_API + props.photo}
+              src={"https://hackaton-9507e74b8c0c.herokuapp.com" + props.photo}
               className="full-search-img"
               alt="Fissure in Sandstone"
             />

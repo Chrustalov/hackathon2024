@@ -8,19 +8,19 @@ import RequestFilter from "../../components/requests_filter";
 
 import { UserContext } from "../../App";
 import { useToastNotification } from "../../hooks/useToastNotification";
-const url = process.env.REACT_APP_API + "/api/v1/requests";
+const url = "https://hackaton-9507e74b8c0c.herokuapp.com" + "/api/v1/requests";
 
 function Request(props) {
   const [requests, setRequests] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [tags, setTags] = useState([]);
   const [all_tags, setAllTags] = useState([]);
-  const { contextValue} = useContext(UserContext);
-  const { toastError} = useToastNotification();
+  const { contextValue } = useContext(UserContext);
+  const { toastError } = useToastNotification();
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        console.log(contextValue.user)
+        console.log(contextValue.user);
         setIsFetching(false);
         const { data } = await get_tags(url, props.filter ? props.filter : {});
         console.log(data);

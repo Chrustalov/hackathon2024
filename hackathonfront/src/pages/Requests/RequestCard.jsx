@@ -40,7 +40,7 @@ const RequestCard = (props) => {
   return (
     <div className="col-sm-5 col-md-4 col-10 col-lg-3  ">
       <img
-        src={process.env.REACT_APP_API + props.photo}
+        src={"https://hackaton-9507e74b8c0c.herokuapp.com" + props.photo}
         className="card-img-top"
         alt="Fissure in Sandstone"
       />
