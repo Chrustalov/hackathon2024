@@ -32,13 +32,12 @@ class Api::V1::RequestsController < ApplicationController
     user_profile = @request.user.profile
     latest_posts = Request.order(created_at: :desc).limit(3)
 
-    render json: { request: @request, tags:, user:, user_profile:,executor:, executor_profile:, latest_posts: }
+    render json: { request: @request, tags:, user:, user_profile:, executor:, executor_profile:, latest_posts: }
   end
 
   # POST /requests
   def create
-    pry
-    tags = params[:tag_ids].map { |tag_id| Tag.find(tag_id) }
+    tags = params[:request][:tag_ids].values.map { |tag_id| Tag.find(tag_id) }
     @request = current_user.requests.build(request_params)
     @request.tags << tags
     if @request.save

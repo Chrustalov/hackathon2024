@@ -45,11 +45,10 @@ export const useCreateRequest = () => {
     axios
       .post(
         REQUEST_URL,
-        { ...request },
+          { request: { ...request } },
         {
           headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+            'Content-Type': 'multipart/form-data',
             Authorization: localStorage.getItem("token"),
           },
         }
