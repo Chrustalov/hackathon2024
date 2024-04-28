@@ -7,6 +7,7 @@ import RequestSkeleton from "./RequestSkeleton";
 import RequestFilter from "../../components/requests_filter";
 
 import { UserContext } from "../../App";
+import { useToastNotification } from "../../hooks/useToastNotification";
 const url = process.env.REACT_APP_API + "/api/v1/requests";
 
 function Request(props) {
@@ -15,6 +16,7 @@ function Request(props) {
   const [tags, setTags] = useState([]);
   const [all_tags, setAllTags] = useState([]);
   const { contextValue} = useContext(UserContext);
+  const { toastError} = useToastNotification();
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -27,7 +29,8 @@ function Request(props) {
         setTags(data.tags);
         setIsFetching(true);
       } catch (err) {
-        alert("Щось пішло не так попробуйте щераз!");
+        //alert("Щось пішло не так попробуйте щераз!");
+        toastError(err.response?.data?.message);
         console.log(err);
       }
     };

@@ -37,9 +37,9 @@ function RequestFilter({ initialTags = [], onTagClick, All_tags = [] }) {
 
   return (
       <div>
-        <label htmlFor="tags">Оберіть теги:</label>
+        <label htmlFor="tags">Select tags:</label>
         <select id="tags" className="form-select form-select-sm" multiple ref={selectRef} />
-        <button className="btn btn-outline-dark mt-4" onClick={handleClick}>Застосувати фільтр</button>
+        <button className="btn btn-outline-dark mt-4" onClick={handleClick}>Apply filters</button>
       </div>
   );
 }
