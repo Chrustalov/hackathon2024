@@ -176,7 +176,6 @@ function Login() {
                   name="volunteer"
                   value={volunteer}
                   onChange={toggleVolunteer}
-                  required
                 />
               </label>
             </div>
@@ -397,7 +396,7 @@ function Login() {
       const data = response.data;
       if (response.status > 300) throw data;
         console.log(data)
-      updateRole(data.status.data.user.role)
+      updateRole(data.data.role)
       console.log(response.headers.get("Authorization"));
       localStorage.setItem("token", response.headers.get("Authorization"));
       toastSuccess(data?.status?.message);

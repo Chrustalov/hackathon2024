@@ -226,5 +226,8 @@ code {
     background-color: red
   };
 
+}
 
+::-webkit-scrollbar {
+  width: 0px;
 }
