@@ -14,7 +14,9 @@ const initialState = {
 
 function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  
   useEffect(() => {
+    console.log("profile", profile);
     if (profile) {
       dispatch({ type: "SET_STATE", payload: profile });
     }
@@ -23,7 +25,7 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
 
 
   const setAvatar = useCallback((file) => {
-    dispatch({ type: "SET_AVATAR", payload: { file } });
+    dispatch({ type: "SET_AVATAR", payload: file });
   }, []);
   const onFirstNameChange = useCallback((e) => {
     dispatch({ type: "SET_FIRST_NAME", payload: e.target.value });
@@ -143,6 +145,7 @@ function reducer(state, action) {
     case "SET_ABOUT_ME":
       return { ...state, about_me: action.payload };
     case "SET_AVATAR":
+      console.log("reducer SET_AVATAR ", action.payload, state.avatar);
       return { ...state, avatar: action.payload };
     default:
       return state;

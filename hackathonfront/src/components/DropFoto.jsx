@@ -1,14 +1,22 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { UploadCloud } from "./icons";
 
 function DropFoto({ className = "", file, setFile }) {
   const inputRef = useRef(null);
+  const [url, setUrl] = useState(null);
+
+  useEffect(() => {
+    try {
+      if (file?.url) setUrl(file.url);
+      if (file) setUrl(URL.createObjectURL(file));
+    } catch (e) {}
+  }, [file]);
 
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setFile(e.dataTransfer.files[0]);
-  }
+  };
 
   const handleClick = useCallback(() => {
     inputRef.current.click();
@@ -48,7 +56,7 @@ function DropFoto({ className = "", file, setFile }) {
           >
             <div className="col-auto">
               <img
-                src={file ? URL.createObjectURL(file) : ""}
+                src={url}
                 className="img-fluid"
                 alt="uploaded foto"
               />
