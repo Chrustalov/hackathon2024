@@ -1,7 +1,17 @@
-# README
+Requirments
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby
+Rails
+Postgresql
+Node.js
+React
+
+Database creation & initialization
+
+rake db:create db:migrate db:seed
+or database created and we need recreate
+rake db:drop db:create db:migrate db:seed
+
 
 Things you may want to cover:
 

@@ -13,6 +13,12 @@ Rails.application.routes.draw do
       resources :requests
       resources :tags
       resources :profiles
+      resources :requests do
+        member do
+          patch 'start_execute' # Маршрут для початку виконання запиту
+          patch 'end_execute'   # Маршрут для завершення виконання запиту
+        end
+      end
       root to: "requests#index"
     end
   end

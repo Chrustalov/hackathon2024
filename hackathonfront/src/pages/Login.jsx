@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Eye, Facebook, Google, Twitter } from "../components/icons";
 import {
   Link,
@@ -8,6 +8,7 @@ import {
   useResolvedPath,
 } from "react-router-dom";
 import axios from "axios";
+import { RoleContext } from "../RoleContext";
 import { useToastNotification } from "../hooks/useToastNotification";
 
 function Login() {
@@ -25,6 +26,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { role, updateRole } = useContext(RoleContext);
   const [volunteer, setVolunteer] = useState(false);
 
   const togglePassword = useCallback(() => {
@@ -369,6 +371,7 @@ function Login() {
 
   async function Login({ name, password, email, volunteer }, endPoint = "/login") {
     try {
+      
       const response = await axios
         .post(
           process.env.REACT_APP_API + endPoint,
@@ -393,6 +396,8 @@ function Login() {
 
       const data = response.data;
       if (response.status > 300) throw data;
+        console.log(data)
+      updateRole(data.status.data.user.role)
       console.log(response.headers.get("Authorization"));
       localStorage.setItem("token", response.headers.get("Authorization"));
       toastSuccess(data?.status?.message);
