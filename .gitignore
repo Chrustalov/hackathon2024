@@ -8,10 +8,8 @@
 /.bundle
 
 # Ignore all environment files (except templates).
-*.env.development
 /.env*
 !/.env*.erb
-/hackathonfront/.env.development
 
 # Ignore all logfiles and tempfiles.
 /log/*
