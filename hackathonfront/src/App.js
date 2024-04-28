@@ -5,7 +5,7 @@ import "./App.css";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState, useCallback } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -14,18 +14,28 @@ import Footer from "./components/Footer";
 import RequestDetails from "./pages/Requests/RequestDetails";
 import Login from "./pages/Login";
 import ScrollToTop from "./components/ScrollToTop";
-import { RoleProvider } from "./RoleContext";
 const API_URL = "http://localhost:3000/api/v1/requests";
 
 function getAPIData() {
   return axios.get(API_URL).then((resp) => resp.data);
 }
 
+export const UserContext = createContext(null);
 function App() {
+  const [user, setUser] = useState(null);
+  const login = useCallback((newUser) => {
+    setUser(newUser);
+  }, []);
+
+  const contextValue = useMemo(() => ({
+    user,
+    login
+  }), [user, login]);
+
   const loginPage = useMemo(() => <Login />, []);
 
   return (
-    <RoleProvider>
+    <UserContext.Provider value={{contextValue}}>
       <BrowserRouter>
         <ScrollToTop />
         <Header />
@@ -46,11 +56,10 @@ function App() {
           <Route path={"/signin"} element={loginPage} />
           <Route path={"/signup"} element={loginPage} />
         </Routes>
-
         <Footer />
         <ToastContainer />
       </BrowserRouter>
-    </RoleProvider>
+    </UserContext.Provider>
   );
 }
 

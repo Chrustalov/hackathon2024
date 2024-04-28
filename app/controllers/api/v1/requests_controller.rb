@@ -25,15 +25,21 @@ class Api::V1::RequestsController < ApplicationController
   def show
     tags = @request.tags
     user = @request.user
+    executor = @request.executor
+    executor_profile  = nil
+    executor_profile = executor.profile if executor
+
     user_profile = @request.user.profile
     latest_posts = Request.order(created_at: :desc).limit(3)
 
-    render json: { request: @request, tags:, user:, user_profile:, latest_posts: }
+    render json: { request: @request, tags:, user:, user_profile:,executor:, executor_profile:, latest_posts: }
   end
 
   # POST /requests
   def create
+    tags = params[:tag_ids].map { |tag_id| Tag.find(tag_id) }
     @request = current_user.requests.build(request_params)
+    @request.tags << tags
     if @request.save
       render json: @request, status: :created, location: api_v1_requests_path
     else
@@ -59,9 +65,9 @@ class Api::V1::RequestsController < ApplicationController
     if current_user 
       @request.executor = current_user
       if @request.save
-        render json: @request
+        render json: {request: @request, executor: @request.executor, profile: @request.executor.profile}
       else
-        render json: @request.errors, status: :unprocessable_entity
+        render json:  @request.errors, status: :unprocessable_entity
       end
     else 
       render json: "Nor Auth", status: :unprocessable_entity
@@ -72,7 +78,7 @@ class Api::V1::RequestsController < ApplicationController
   def end_execute 
     @request.completed = true
     if @request.save
-      render json: @request
+      render json:{ request: @request}
     else
       render json: @request.errors, status: :unprocessable_entity
     end

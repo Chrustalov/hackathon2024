@@ -5,7 +5,8 @@ import "./card.css";
 import RequestCard from "./RequestCard";
 import RequestSkeleton from "./RequestSkeleton";
 import RequestFilter from "../../components/requests_filter";
-import { RoleContext } from "../../RoleContext";
+
+import { UserContext } from "../../App";
 const url = process.env.REACT_APP_API + "/api/v1/requests";
 
 function Request(props) {
@@ -13,11 +14,11 @@ function Request(props) {
   const [isFetching, setIsFetching] = useState(false);
   const [tags, setTags] = useState([]);
   const [all_tags, setAllTags] = useState([]);
-  const { role, updateRole } = useContext(RoleContext);
+  const { contextValue} = useContext(UserContext);
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        console.log(role);
+        console.log(contextValue.user)
         setIsFetching(false);
         const { data } = await get_tags(url, props.filter ? props.filter : {});
         console.log(data);

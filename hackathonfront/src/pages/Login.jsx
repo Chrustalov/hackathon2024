@@ -8,7 +8,7 @@ import {
   useResolvedPath,
 } from "react-router-dom";
 import axios from "axios";
-import { RoleContext } from "../RoleContext";
+import { UserContext } from "../App";
 import { useToastNotification } from "../hooks/useToastNotification";
 
 function Login() {
@@ -26,7 +26,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { role, updateRole } = useContext(RoleContext);
+  const { contextValue } = useContext(UserContext);
   const [volunteer, setVolunteer] = useState(false);
 
   const togglePassword = useCallback(() => {
@@ -368,9 +368,11 @@ function Login() {
     </main>
   );
 
-  async function Login({ name, password, email, volunteer }, endPoint = "/login") {
+  async function Login(
+    { name, password, email, volunteer },
+    endPoint = "/login"
+  ) {
     try {
-      
       const response = await axios
         .post(
           process.env.REACT_APP_API + endPoint,
@@ -395,8 +397,16 @@ function Login() {
 
       const data = response.data;
       if (response.status > 300) throw data;
-        console.log(data)
-      updateRole(data.data.role)
+      console.log(data.data);
+      let data_user;
+      if (isNewUser) {
+        data_user = data.data;
+        console.log(data.data);
+      } else {
+        data_user = data.status.data.user;
+      }
+      contextValue.login(data_user);
+      console.log(contextValue);
       console.log(response.headers.get("Authorization"));
       localStorage.setItem("token", response.headers.get("Authorization"));
       toastSuccess(data?.status?.message);
