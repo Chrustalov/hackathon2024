@@ -14,7 +14,7 @@ function FotoCard({
         <div className="card-body text-center">
           <img
             src={
-                'https://hackaton-9507e74b8c0c.herokuapp.com/' + avatarUrl ||
+                'https://hackaton-9507e74b8c0c.herokuapp.com' + avatarUrl ||
               "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
             }
             alt="avatar"

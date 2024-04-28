@@ -22,7 +22,7 @@ const LatestPost = (props) => {
             </div>
             <div className="lpa-right">
                 <a href="#">
-                    <img src={'https://hackaton-9507e74b8c0c.herokuapp.com/' + props.photo.url} title="" alt="" />
+                    <img src={'https://hackaton-9507e74b8c0c.herokuapp.com' + props.photo.url} title="" alt="" />
                 </a>
             </div>
         </Link>

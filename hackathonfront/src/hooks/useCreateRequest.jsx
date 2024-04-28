@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import CreateRequestModal from "../components/CreateRequestModal";
 import axios from "axios";
 import { useToastNotification } from "./useToastNotification";
-const REQUEST_URL = 'https://hackaton-9507e74b8c0c.herokuapp.com/' + "/api/v1/requests";
-const TAGS_URL = 'https://hackaton-9507e74b8c0c.herokuapp.com/' + "/api/v1/tags";
+const REQUEST_URL = 'https://hackaton-9507e74b8c0c.herokuapp.com' + "/api/v1/requests";
+const TAGS_URL = 'https://hackaton-9507e74b8c0c.herokuapp.com' + "/api/v1/tags";
 
 export const useCreateRequest = () => {
   const [isOpen, setIsOpen] = useState(false);

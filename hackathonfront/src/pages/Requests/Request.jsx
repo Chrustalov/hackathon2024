@@ -7,7 +7,7 @@ import RequestSkeleton from "./RequestSkeleton";
 import RequestFilter from "../../components/requests_filter";
 
 import { UserContext } from "../../App";
-const url = 'https://hackaton-9507e74b8c0c.herokuapp.com/' + "/api/v1/requests";
+const url = 'https://hackaton-9507e74b8c0c.herokuapp.com' + "/api/v1/requests";
 
 function Request(props) {
   const [requests, setRequests] = useState([]);
@@ -16,7 +16,7 @@ function Request(props) {
   const [all_tags, setAllTags] = useState([]);
   const { contextValue} = useContext(UserContext);
 
-  console.log('https://hackaton-9507e74b8c0c.herokuapp.com/');
+  console.log('https://hackaton-9507e74b8c0c.herokuapp.com');
   useEffect(() => {
     const fetchRequests = async () => {
       try {
