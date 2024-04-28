@@ -32,17 +32,22 @@ export const useCreateRequest = () => {
   }, []);
 
   const onSubmit = useCallback((request) => {
+    console.log(request);
     axios
-      .post(REQUEST_URL, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-        body: request,
-      })
+      .post(
+        REQUEST_URL,
+        { request },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then((resp) => {
         toastSuccess("Request created successfully");
+        console.log(resp.data);
         close();
       })
       .catch((err) => toastError(err.response?.data?.message));

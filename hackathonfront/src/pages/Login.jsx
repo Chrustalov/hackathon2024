@@ -1,12 +1,18 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Eye, Facebook, Google, Twitter } from "../components/icons";
-import { Link, useLocation, useNavigate, useNavigation, useResolvedPath } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useNavigation,
+  useResolvedPath,
+} from "react-router-dom";
 import axios from "axios";
 import { RoleContext } from "../RoleContext";
 import { useToastNotification } from "../hooks/useToastNotification";
 
 function Login() {
-  const {toastSuccess , toastError} = useToastNotification();
+  const { toastSuccess, toastError } = useToastNotification();
 
   const location = useLocation();
   const navigation = useNavigate();
@@ -21,9 +27,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { role, updateRole } = useContext(RoleContext);
+  const [volunteer, setVolunteer] = useState(false);
 
   const togglePassword = useCallback(() => {
     setShowPassword((prev) => !prev);
+  }, []);
+
+  const toggleVolunteer = useCallback(() => {
+    setVolunteer((prev) => !prev);
   }, []);
 
   const onChangename = useCallback((e) => {
@@ -36,15 +47,17 @@ function Login() {
     setPassword(e.target.value);
   }, []);
 
-  const changeForm =() => {
-    navigation(location.pathname === "/signup" ? "/signin" : "/signup", { replace: true });
+  const changeForm = () => {
+    navigation(location.pathname === "/signup" ? "/signin" : "/signup", {
+      replace: true,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (isNewUser) {
-      Login({ email, password, name }, "/signup");
+      Login({ email, password, name, volunteer }, "/signup");
     } else {
       Login({ email, password });
     }
@@ -146,6 +159,28 @@ function Login() {
                 <Eye fill={"#000"} isOpen={showPassword} />
               </button>
             </label>
+
+            <div className="d-flex align-content-center justify-content-center gap-2">
+              <label
+                htmlFor="volunteer"
+                id="volunteer-label"
+                className="d-flex w-50 align-content-center justify-content-between"
+              >
+                <span className="me-2">I am volunteer</span>
+                <input
+                  className="rounded p-2 form-check-input login-input "
+                  type="checkbox"
+                  id="volunteer"
+                  placeholder="Volunteer"
+                  aria-label="Volunteer"
+                  name="volunteer"
+                  value={volunteer}
+                  onChange={toggleVolunteer}
+                  required
+                />
+              </label>
+            </div>
+
             <div>
               <button
                 className="login-input btn btn-outline-dark w-50"
@@ -334,8 +369,7 @@ function Login() {
     </main>
   );
 
-  async function Login({ name, password, email }, endPoint = "/login") {
-  
+  async function Login({ name, password, email, volunteer }, endPoint = "/login") {
     try {
       
       const response = await axios
@@ -346,6 +380,7 @@ function Login() {
               name,
               password,
               email,
+              role: volunteer ? 1 : 0,
             },
           },
           {

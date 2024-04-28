@@ -97,7 +97,7 @@ const Profile = () => {
     setLinks((prev) => prev.map((link, i) => (i === index ? newLink : link)));
   }, []);
 
-  if (!user || !profile) {
+  if (!user) {
     return (
       <ContentLoader
         speed={2}

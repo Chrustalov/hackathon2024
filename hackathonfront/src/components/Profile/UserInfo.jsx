@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import UserInfoElement from "./UserInfoElement";
+import { useReducer } from "react";
 
 const initialState = {
   first_name: "",
@@ -13,7 +14,7 @@ const initialState = {
 };
 
 function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     if (profile) {
@@ -109,7 +110,7 @@ function UserInfo({ profile, onEditProfile, isEditing, onCancel }) {
 function reducer(state, action) {
   switch (action.type) {
     case "SET_STATE":
-      return { ...state, ...action.payload };
+      return { ...state, ...action.payload || initialState };
     case "SET_FIRST_NAME":
       return { ...state, first_name: action.payload };
     case "SET_LAST_NAME":

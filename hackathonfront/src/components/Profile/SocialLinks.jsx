@@ -13,6 +13,7 @@ function SocialLinks({ links = [], addLink, removeLink, editLink }) {
           isNew={index === links.length - 1 && !link}
           onEditLink={(newLink) => editLink(index, newLink)}
           onRemoveLink={() => removeLink(index)}
+          isLink={link.includes("http")}
         />
       ))
     );

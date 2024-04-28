@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import TomSelect from "tom-select";
+import DropFoto from "./DropFoto";
 
 function CreateRequestModal({
   isOpen = false,
@@ -9,7 +10,13 @@ function CreateRequestModal({
   setRequest,
   tags,
 }) {
-  
+  const contentRef = useRef(null);
+
+  const handleOutsideClick = (e) => {
+    if (contentRef.current && !contentRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
 
   const onChangeTitle = useCallback(
     (e) => {
@@ -33,12 +40,17 @@ function CreateRequestModal({
   const onSave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    onSubmit({
-      ...request,
-      tags: tags
-        .filter((tag) => !!request.tags.find((name) => tag.name === name))
-        .map((tag) => tag.id),
-    });
+    const form = document.getElementById("create-request");
+    if (form.checkValidity()) {
+      onSubmit({
+        ...request,
+        tags: tags
+          .filter((tag) => !!request?.tags?.find((name) => tag.name === name))
+          .map((tag) => tag.id),
+      });
+    } else {
+      form.reportValidity();
+    }
   };
 
   if (!isOpen) return null;
@@ -46,12 +58,16 @@ function CreateRequestModal({
   return (
     <div
       className="modal d-block end-0 bottom-0 overflow-hidden "
-      tabindex="-1"
       aria-labelledby="createRequestModalLabel"
       aria-hidden="true"
+      onClick={handleOutsideClick}
     >
       <div className="modal-dialog h-100">
-        <div className="modal-content " style={{ marginTop: "20%" }}>
+        <div
+          className="modal-content "
+          style={{ marginTop: "20%" }}
+          ref={contentRef}
+        >
           <div className="modal-header">
             <h1 className="modal-title fs-5 text-center">Create request</h1>
           </div>
@@ -98,6 +114,7 @@ function CreateRequestModal({
                 onClick={onTagsChange}
                 All_tags={tags}
               />
+              <DropFoto  />
             </form>
           </div>
 
