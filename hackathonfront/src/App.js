@@ -32,6 +32,20 @@ function App() {
     login
   }), [user, login]);
 
+  useEffect(() => {
+    if(user){
+      localStorage.setItem('appState', JSON.stringify(user));
+    }
+   
+  }, [user]);
+
+  useEffect(() => {
+    const savedState = localStorage.getItem('appState');
+    if (savedState) {
+      login(JSON.parse(savedState));
+    }
+  }, []);
+
   const loginPage = useMemo(() => <Login />, []);
 
   return (
